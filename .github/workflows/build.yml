@@ -1,0 +1,47 @@
+
+name: IRAF macOS build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    env:
+      iraf: ${{ github.workspace }}/iraf/
+      TERM: ansi
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Checkout IRAF
+        uses: actions/checkout@v3
+        with:
+          repository: iraf-community/iraf
+          path: ${{ env.iraf }}
+
+      - name: Build IRAF
+        run: |
+           IRAFARCH=macos64 CFLAGS="-O2" make -C ${{ env.iraf }}
+
+      - name: Run tests
+        run: |
+         make -C ${{ env.iraf }} test
+
+      - name: Installation
+        run: |
+          mkdir install
+          make -C ${{ env.iraf }} DESTDIR=`pwd`/install install
+
+      - name: Create distribution file
+        run: |
+          tar cvf iraf-v2.17.1_macos.tar.gz -C install .
+
+      - name: Copy file via ssh
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          ssh-agent -a $SSH_AUTH_SOCK
+          ssh-add -v - <<< "${{ secrets.SSH_KEY }}"
+          scp -o StrictHostKeyChecking=no -v iraf-v2.17.1_macos.tar.gz iraf@olebole.net:dist/

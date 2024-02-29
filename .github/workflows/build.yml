@@ -21,18 +21,36 @@ jobs:
           repository: iraf-community/iraf
           path: ${{ env.iraf }}
 
+      - name: Checkout x11iraf
+        uses: actions/checkout@v3
+        with:
+          repository: iraf-community/x11iraf
+          path: x11iraf
+
+      - name: Setup XQuartz on macOS
+        run: |
+          wget https://github.com/XQuartz/XQuartz/releases/download/XQuartz-2.8.1/XQuartz-2.8.1.dmg
+          sudo hdiutil attach XQuartz-2.8.1.dmg
+          sudo installer -package /Volumes/XQuartz-2.8.1/XQuartz.pkg -target /
+          sudo rm -f /usr/local/include/tcl.h
+
       - name: Build IRAF
         run: |
            IRAFARCH=macos64 CFLAGS="-O2" make -C ${{ env.iraf }}
 
-      - name: Run tests
+      - name: Run IRAF tests
         run: |
          make -C ${{ env.iraf }} test
+
+      - name: Build x11iraf
+        run: |
+          make -C x11iraf
 
       - name: Installation
         run: |
           mkdir install
           make -C ${{ env.iraf }} DESTDIR=`pwd`/install install
+          make -C x11iraf DESTDIR=`pwd`/install install
 
       - name: Create distribution file
         run: |

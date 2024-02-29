@@ -54,7 +54,9 @@ jobs:
 
       - name: Create distribution file
         run: |
-          tar cvf iraf-v2.17.1_macos.tar.gz -C install .
+          # tar cvf iraf-v2.17.1_macos.tar.gz -C install .
+          pkgbuild --identifier org.iraf-community.iraf.app --root install --install-location / iraf0.pkg
+          productbuild --package iraf0.pkg iraf.pkg
 
       - name: Copy file via ssh
         env:
@@ -62,4 +64,5 @@ jobs:
         run: |
           ssh-agent -a $SSH_AUTH_SOCK
           ssh-add -v - <<< "${{ secrets.SSH_KEY }}"
-          scp -o StrictHostKeyChecking=no -v iraf-v2.17.1_macos.tar.gz iraf@olebole.net:dist/
+          #scp -o StrictHostKeyChecking=no iraf-v2.17.1_macos.tar.gz iraf@olebole.net:dist/
+          scp -o StrictHostKeyChecking=no iraf.pkg iraf@olebole.net:dist/

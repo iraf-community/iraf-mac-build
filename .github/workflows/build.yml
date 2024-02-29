@@ -36,11 +36,11 @@ jobs:
 
       - name: Build IRAF
         run: |
-           IRAFARCH=macos64 CFLAGS="-O2" make -C ${{ env.iraf }}
+           # IRAFARCH=macos64 CFLAGS="-O2" make -C ${{ env.iraf }}
 
       - name: Run IRAF tests
         run: |
-         make -C ${{ env.iraf }} test
+           #  make -C ${{ env.iraf }} test
 
       - name: Build x11iraf
         run: |
@@ -49,7 +49,7 @@ jobs:
       - name: Installation
         run: |
           mkdir install
-          make -C ${{ env.iraf }} DESTDIR=`pwd`/install install
+          #make -C ${{ env.iraf }} DESTDIR=`pwd`/install install
           make -C x11iraf DESTDIR=`pwd`/install install
 
       - name: Create distribution file

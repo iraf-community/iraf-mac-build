@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="2">
+    <pkg-ref id="org.iraf-community.iraf.app"/>
+    <title>IRAF 2.17.1</title>
+    <options customize="never" require-scripts="false" hostArchitectures="arm64"/>
+    <choices-outline>
+        <line choice="default">
+            <line choice="org.iraf-community.iraf.app"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="org.iraf-community.iraf.app" visible="false">
+        <pkg-ref id="org.iraf-community.iraf.app"/>
+    </choice>
+    <pkg-ref id="org.iraf-community.iraf.app" version="0" onConclusion="none">iraf0.pkg</pkg-ref>
+</installer-gui-script>

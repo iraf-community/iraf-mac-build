@@ -27,11 +27,8 @@
       </pkg-ref>
     </choice>
     <choice id="org.iraf-community.iraf.x11" title="xgterm and ximtool">
-      <pkg-ref id="org.iraf-community.iraf.xgterm">
-	xgterm.pkg
-      </pkg-ref>
-      <pkg-ref id="org.iraf-community.iraf.ximtool">
-	ximtool.pkg
+      <pkg-ref id="org.iraf-community.iraf.x11">
+	x11iraf.pkg
       </pkg-ref>
     </choice>
     <choice id="org.iraf-community.iraf.external" title="External packages"/>

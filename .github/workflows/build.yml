@@ -15,18 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Checkout IRAF
-        uses: actions/checkout@v3
-        with:
-          repository: iraf-community/iraf
-          path: ${{ env.iraf }}
-
-      - name: Checkout x11iraf
-        uses: actions/checkout@v3
-        with:
-          repository: iraf-community/x11iraf
-          path: x11iraf
-
       - name: Setup XQuartz on macOS
         run: |
           wget https://github.com/XQuartz/XQuartz/releases/download/XQuartz-2.8.1/XQuartz-2.8.1.dmg
@@ -34,29 +22,11 @@ jobs:
           sudo installer -package /Volumes/XQuartz-2.8.1/XQuartz.pkg -target /
           sudo rm -f /usr/local/include/tcl.h
 
-      - name: Build IRAF
+      - name: Build package
         run: |
-           # IRAFARCH=macos64 CFLAGS="-O2" make -C ${{ env.iraf }}
-
-      - name: Run IRAF tests
-        run: |
-           #  make -C ${{ env.iraf }} test
-
-      - name: Build x11iraf
-        run: |
-          make -C x11iraf
-
-      - name: Installation
-        run: |
-          mkdir iraf_install x11iraf_install
-          #make -C ${{ env.iraf }} DESTDIR=`pwd`/install iraf_install
-          make -C x11iraf DESTDIR=`pwd`/x11iraf_install install
-
-      - name: Create distribution file
-        run: |
-          pkgbuild --identifier org.iraf-community.iraf.app --root iraf_install --install-location / iraf-core.pkg
-          pkgbuild --identifier org.iraf-community.iraf.app --root x11iraf_install --install-location / x11iraf.pkg
-          productbuild --distribution iraf_distribution.plist --resources . iraf.pkg
+           make iraf.pkg
+           du install
+           ls -l
 
       - name: Copy file via ssh
         env:
@@ -64,5 +34,4 @@ jobs:
         run: |
           ssh-agent -a $SSH_AUTH_SOCK
           ssh-add -v - <<< "${{ secrets.SSH_KEY }}"
-          #scp -o StrictHostKeyChecking=no iraf-v2.17.1_macos.tar.gz iraf@olebole.net:dist/
           scp -o StrictHostKeyChecking=no iraf.pkg iraf@olebole.net:dist/

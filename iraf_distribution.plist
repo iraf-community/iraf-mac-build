@@ -1,19 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <installer-gui-script minSpecVersion="1">
-    <pkg-ref id="org.iraf-community.iraf.app"/>
+    <product id="org.iraf-community.iraf.app" version="2.17.1-1"/>
     <title>Community IRAF 2.17.1</title>
+    <background file="logo.png" mime-type="image/png" alignment="bottomleft"/>
     <welcome file="welcome.html"/>
-    <readme file="readme.html"/>
-    <conclusions file="conclusion.html"/>
-    <options customize="never" require-scripts="false" hostArchitectures="arm64"/>
+    <conclusion file="conclusion.html"/>
+    <domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true"/>
+    <options customize="always" require-scripts="false" hostArchitectures="x86_64,arm64"/>
     <choices-outline>
-        <line choice="default">
-            <line choice="org.iraf-community.iraf.app"/>
-        </line>
+      <line choice="org.iraf-community.iraf.core"/>
+      <line choice="org.iraf-community.iraf.x11"/>
+      <line choice="org.iraf-community.iraf.external">
+	<line choice="org.iraf-community.iraf.ctio"/>
+	<line choice="org.iraf-community.iraf.fitsutil"/>
+	<line choice="org.iraf-community.iraf.mscred"/>
+	<line choice="org.iraf-community.iraf.nfextern"/>
+	<line choice="org.iraf-community.iraf.rvsao"/>
+	<line choice="org.iraf-community.iraf.sptable"/>
+	<line choice="org.iraf-community.iraf.st4gem"/>
+	<line choice="org.iraf-community.iraf.xdimsum"/>
+      </line>
     </choices-outline>
-    <choice id="default"/>
-    <choice id="org.iraf-community.iraf.app" visible="false">
-        <pkg-ref id="org.iraf-community.iraf.app"/>
+    <choice id="org.iraf-community.iraf.core" title="IRAF core" enabled="false">
+      <pkg-ref id="org.iraf-community.iraf.core">
+	iraf-core.pkg
+      </pkg-ref>
     </choice>
-    <pkg-ref id="org.iraf-community.iraf.app" version="2.17.1" onConclusion="none">iraf0.pkg</pkg-ref>
+    <choice id="org.iraf-community.iraf.x11" title="xgterm and ximtool">
+      <pkg-ref id="org.iraf-community.iraf.xgterm">
+	xgterm.pkg
+      </pkg-ref>
+      <pkg-ref id="org.iraf-community.iraf.ximtool">
+	ximtool.pkg
+      </pkg-ref>
+    </choice>
+    <choice id="org.iraf-community.iraf.external" title="External packages"/>
+    <choice id="org.iraf-community.iraf.ctio" title="ctio" start_selected="false"/>
+    <choice id="org.iraf-community.iraf.fitsutil" title="fitsutil" start_selected="false"/>
+    <choice id="org.iraf-community.iraf.mscred" title="mscred" start_selected="false"/>
+    <choice id="org.iraf-community.iraf.nfextern" title="nfextern" start_selected="false"/>
+    <choice id="org.iraf-community.iraf.rvsao" title="rvsao" start_selected="false"/>
+    <choice id="org.iraf-community.iraf.sptable" title="sptable" start_selected="false"/>
+    <choice id="org.iraf-community.iraf.st4gem" title="st4gem" start_selected="false"/>
+    <choice id="org.iraf-community.iraf.xdimsum" title="xdimsum" start_selected="false"/>
 </installer-gui-script>

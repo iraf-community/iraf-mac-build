@@ -48,15 +48,15 @@ jobs:
 
       - name: Installation
         run: |
-          mkdir install
-          #make -C ${{ env.iraf }} DESTDIR=`pwd`/install install
-          make -C x11iraf DESTDIR=`pwd`/install install
+          mkdir iraf_install x11iraf_install
+          #make -C ${{ env.iraf }} DESTDIR=`pwd`/install iraf_install
+          make -C x11iraf DESTDIR=`pwd`/x11iraf_install install
 
       - name: Create distribution file
         run: |
-          # tar cvf iraf-v2.17.1_macos.tar.gz -C install .
-          pkgbuild --identifier org.iraf-community.iraf.app --root install --install-location / iraf0.pkg
-          productbuild --distribution iraf_distribution.plist --resources . --package-path iraf0.pkg iraf.pkg
+          pkgbuild --identifier org.iraf-community.iraf.app --root iraf_install --install-location / iraf-core.pkg
+          pkgbuild --identifier org.iraf-community.iraf.app --root x11iraf_install --install-location / x11iraf.pkg
+          productbuild --distribution iraf_distribution.plist --resources . iraf.pkg
 
       - name: Copy file via ssh
         env:

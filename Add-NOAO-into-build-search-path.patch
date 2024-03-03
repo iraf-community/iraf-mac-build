@@ -1,0 +1,24 @@
+From: Ole Streicher <olebole@debian.org>
+Date: Tue, 22 Mar 2022 08:56:29 +0100
+Subject: Add NOAO into build search path
+
+Otherwise, smw.h and libsmw are not found. This partially reverts a
+change of rvsao 2.8.4 --> 2.8.5.
+---
+ mkpkg | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/mkpkg b/mkpkg
+index c6a6e1c..5f5cb9a 100644
+--- a/mkpkg
++++ b/mkpkg
+@@ -14,8 +14,7 @@ install:
+ 	;
+ 
+ relink:
+-#	!mkpkg -p noao -p rvsao nrelink
+-	!mkpkg nrelink
++	!mkpkg -p noao nrelink
+ 	;
+  
+ nrelink:

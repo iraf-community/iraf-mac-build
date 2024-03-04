@@ -14,6 +14,7 @@ else
   export IRAFARCH=macos64
 endif
 export MKPKG=$(iraf)unix/bin/mkpkg.e
+export RMFILES=$(iraf)unix/bin/rmfiles.e
 
 #export CFLAGS=
 #export LDFLAGS=
@@ -66,7 +67,8 @@ ctio.pkg: iraf-core.pkg
 	  rm -rf bin* && \
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
-	  ctio=$(BUILDDIR)/ctio/ $(MKPKG) -p ctio)
+	  ctio=$(BUILDDIR)/ctio/ $(MKPKG) -p ctio && \
+	  $(RMFILES) -f lib/strip.ctio )
 	find $(BUILDDIR)/ctio -name \*.[eao] -type f \
 	     -exec codesign -s - -i org.iraf-community.ctio {} \;
 	pkgbuild --identifier org.iraf-community.ctio \
@@ -147,7 +149,8 @@ sptable.pkg: iraf-core.pkg
 	  rm -rf bin* && \
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
-	  sptable=$(BUILDDIR)/sptable/ $(MKPKG) -p sptable)
+	  sptable=$(BUILDDIR)/sptable/ $(MKPKG) -p sptable && \
+	  $(RMFILES) -f lib/strip.sptable )
 	find $(BUILDDIR)/sptable -name \*.[eao] -type f \
 	     -exec codesign -s - -f -i org.iraf-community.sptable {} \;
 	pkgbuild --identifier org.iraf-community.sptable \
@@ -163,11 +166,12 @@ st4gem.pkg: iraf-core.pkg
 	  rm -rf bin* && \
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
-	  st4gem=$(BUILDDIR)/st4gem/ $(MKPKG) -p st4gem)
+	  st4gem=$(BUILDDIR)/st4gem/ $(MKPKG) -p st4gem && \
+	  $(RMFILES) -f lib/strip.st4gem )
 	find $(BUILDDIR)/st4gem -name \*.[eao] -type f \
 	     -exec codesign -s - -i org.iraf-community.st4gem {} \;
 	pkgbuild --identifier org.iraf-community.st4gem \
-	         --root st4gem \
+	         --root $(BUILDDIR)/st4gem \
 	         --install-location /usr/local/lib/iraf/extern/st4gem/ \
 	         $@
 
@@ -179,7 +183,8 @@ xdimsum.pkg: iraf-core.pkg
 	  rm -rf bin* && \
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
-	  xdimsum=$(BUILDDIR)/xdimsum/ $(MKPKG) -p xdimsum)
+	  xdimsum=$(BUILDDIR)/xdimsum/ $(MKPKG) -p xdimsum && \
+	  $(RMFILES) -f lib/strip.xdimsum )
 	find $(BUILDDIR)/xdimsum -name \*.[eao] -type f \
 	     -exec codesign -s - -i org.iraf-community.xdimsum {} \;
 	pkgbuild --identifier org.iraf-community.xdimsum \

@@ -38,7 +38,7 @@ iraf-core.pkg:
 	pkgbuild --identifier org.iraf-community.iraf \
 	         --root $(INSTDIR)/iraf \
 		 --install-location / \
-	         $@ || touch $@
+	         $@
 
 x11iraf.pkg: iraf-core.pkg
 	mkdir -p $(BUILDDIR)/x11iraf
@@ -56,7 +56,7 @@ x11iraf.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.x11iraf \
 	         --root $(INSTDIR)/x11 \
 	         --install-location / \
-	         $@ || touch $@
+	         $@
 
 ctio.pkg: iraf-core.pkg
 	mkdir -p $(BUILDDIR)/ctio
@@ -72,7 +72,7 @@ ctio.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.ctio \
 	         --root $(BUILDDIR)/ctio \
 	         --install-location /usr/local/lib/iraf/extern/ctio/ \
-	         $@ || touch $@
+	         $@
 
 fitsutil.pkg: iraf-core.pkg
 	mkdir -p $(BUILDDIR)/fitsutil
@@ -88,7 +88,7 @@ fitsutil.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.fitsutil \
 	         --root $(BUILDDIR)/fitsutil \
 	         --install-location /usr/local/lib/iraf/extern/fitsutil/ \
-	         $@ || touch $@
+	         $@
 
 mscred.pkg: iraf-core.pkg
 	mkdir -p $(BUILDDIR)/mscred
@@ -104,7 +104,7 @@ mscred.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.mscred \
 	         --root $(BUILDDIR)/mscred \
 	         --install-location /usr/local/lib/iraf/extern/mscred/ \
-	         $@ || touch $@
+	         $@
 
 nfextern.pkg: iraf-core.pkg
 	mkdir -p $(BUILDDIR)/nfextern
@@ -120,7 +120,7 @@ nfextern.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.nfextern \
 	         --root $(BUILDDIR)/nfextern \
 	         --install-location /usr/local/lib/iraf/extern/nfextern/ \
-	         $@ || touch $@
+	         $@
 
 rvsao.pkg: iraf-core.pkg
 	mkdir -p $(BUILDDIR)/rvsao
@@ -137,7 +137,7 @@ rvsao.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.rvsao \
 	         --root $(BUILDDIR)/rvsao \
 	         --install-location /usr/local/lib/iraf/extern/rvsao/ \
-	         $@ || touch $@
+	         $@
 
 sptable.pkg: iraf-core.pkg
 	mkdir -p $(BUILDDIR)/sptable
@@ -153,7 +153,7 @@ sptable.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.sptable \
 	         --root $(BUILDDIR)/sptable \
 	         --install-location /usr/local/lib/iraf/extern/sptable/ \
-	         $@ || touch $@
+	         $@
 
 st4gem.pkg: iraf-core.pkg
 	mkdir -p $(BUILDDIR)/st4gem
@@ -169,7 +169,7 @@ st4gem.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.st4gem \
 	         --root st4gem \
 	         --install-location /usr/local/lib/iraf/extern/st4gem/ \
-	         $@ || touch $@
+	         $@
 
 xdimsum.pkg: iraf-core.pkg
 	mkdir -p $(BUILDDIR)/xdimsum
@@ -185,7 +185,7 @@ xdimsum.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.xdimsum \
 	         --root $(BUILDDIR)/xdimsum \
 	         --install-location /usr/local/lib/iraf/extern/xdimsum/ \
-	         $@ || touch $@
+	         $@
 
 distribution-$(MACARCH).plist: distribution.plist
 	sed s/x86_64,arm64/$(MACARCH)/g $< > $@

@@ -24,9 +24,7 @@ jobs:
 
       - name: Build package
         run: |
-           make iraf.pkg
-           du install
-           ls -l
+           make
 
       - name: Copy file via ssh
         env:

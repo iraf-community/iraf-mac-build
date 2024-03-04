@@ -3,14 +3,18 @@ BUILDDIR=$(shell pwd)/build
 BINDIR=$(shell pwd)/bin
 
 export iraf=$(BUILDDIR)/iraf/
-export IRAFARCH=macos64
+ifeq ($(shell uname -m), x86_64)
+  export IRAFARCH=macintel
+else
+  export IRAFARCH=macos64
+endif
 export MKPKG=$(iraf)unix/bin/mkpkg.e
 
 #export CFLAGS=
 #export LDFLAGS=
 PATH += :$(BINDIR)
 
-all: iraf.pkg
+all: iraf-$(IRAFARCH).pkg
 
 PKGS = iraf-core.pkg x11iraf.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
        nfextern.pkg rvsao.pkg sptable.pkg st4gem.pkg xdimsum.pkg
@@ -158,7 +162,7 @@ xdimsum.pkg: iraf-core.pkg
 	         --install-location /usr/local/lib/iraf/extern/xdimsum/ \
 	         $@ || touch $@
 
-iraf.pkg: $(PKGS) \
+iraf-$(IRAFARCH).pkg: $(PKGS) \
 	  iraf_distribution.plist conclusion.html welcome.html logo.png
 	productbuild --distribution iraf_distribution.plist \
 	             --resources . \

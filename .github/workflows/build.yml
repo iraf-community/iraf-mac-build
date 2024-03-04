@@ -32,4 +32,4 @@ jobs:
         run: |
           ssh-agent -a $SSH_AUTH_SOCK
           ssh-add -v - <<< "${{ secrets.SSH_KEY }}"
-          scp -o StrictHostKeyChecking=no iraf.pkg iraf@olebole.net:dist/
+          scp -o StrictHostKeyChecking=no iraf-mac*.pkg iraf@olebole.net:dist/

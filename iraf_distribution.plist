@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- (C) Ole Streicher, 2024 -->
 <installer-gui-script minSpecVersion="1">
     <product id="org.iraf-community.iraf.app" version="2.17.1-1"/>
     <title>Community IRAF 2.17.1 (rev.1)</title>

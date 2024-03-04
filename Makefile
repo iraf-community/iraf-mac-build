@@ -1,3 +1,6 @@
+# Makefile to create an installable IRAF package
+# (C) Ole Streicher, 2024
+
 INSTDIR=$(shell pwd)/install
 BUILDDIR=$(shell pwd)/build
 BINDIR=$(shell pwd)/bin

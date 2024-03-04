@@ -112,7 +112,7 @@ rvsao.pkg: iraf-core.pkg
 	mkdir -p $(BUILDDIR)/rvsao
 	curl -L http://tdc-www.harvard.edu/iraf/rvsao/rvsao-2.8.5.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/rvsao --strip-components=1
-	patch -d $(BUILDDIR)/rvsao -p1 < Add-NOAO-into-build-search-path.patch
+	patch -d $(BUILDDIR)/rvsao -p1 < patches/rvsao/0001-Add-NOAO-into-build-search-path.patch
 	( cd $(BUILDDIR)/rvsao && \
 	  rm -rf bin* && \
 	  mkdir -p bin.$(IRAFARCH) && \

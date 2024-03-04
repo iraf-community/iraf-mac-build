@@ -29,9 +29,11 @@ iraf-core.pkg:
 	$(MAKE) -C $(BUILDDIR)/iraf
 	mkdir -p $(INSTDIR)/iraf
 	$(MAKE) -C $(BUILDDIR)/iraf DESTDIR=$(INSTDIR)/iraf install
+	find $(INSTDIR)/iraf -name \*.[eao] -type f \
+	     -exec codesign -s - -i org.iraf-community.iraf {} \;
 	mkdir -p bin
 	ln -sf $(MKPKG) bin/mkpkg
-	pkgbuild --identifier org.iraf-community.iraf.core \
+	pkgbuild --identifier org.iraf-community.iraf \
 	         --root $(INSTDIR)/iraf \
 		 --install-location / \
 	         $@ || touch $@
@@ -47,7 +49,9 @@ x11iraf.pkg: iraf-core.pkg
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool $(INSTDIR)/x11/usr/local/bin
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool.man $(INSTDIR)/x11/usr/local/man/man1/ximtool.1
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/clients/ism_wcspix.e $(INSTDIR)/x11/usr/local/bin
-	pkgbuild --identifier org.iraf-community.iraf.x11 \
+	find $(INSTDIR)/x11 -name \*.[eao] -type f \
+	     -exec codesign -s - -i org.iraf-community.x11iraf {} \;
+	pkgbuild --identifier org.iraf-community.x11iraf \
 	         --root $(INSTDIR)/x11 \
 	         --install-location / \
 	         $@ || touch $@
@@ -61,7 +65,9 @@ ctio.pkg: iraf-core.pkg
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
 	  ctio=$(BUILDDIR)/ctio/ $(MKPKG) -p ctio)
-	pkgbuild --identifier org.iraf-community.iraf.ctio \
+	find $(BUILDDIR)/ctio -name \*.[eao] -type f \
+	     -exec codesign -s - -i org.iraf-community.ctio {} \;
+	pkgbuild --identifier org.iraf-community.ctio \
 	         --root $(BUILDDIR)/ctio \
 	         --install-location /usr/local/lib/iraf/extern/ctio/ \
 	         $@ || touch $@
@@ -75,7 +81,9 @@ fitsutil.pkg: iraf-core.pkg
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
 	  fitsutil=$(BUILDDIR)/fitsutil/ $(MKPKG) -p fitsutil HSI_LF="$(LDFLAGS)" HSI_CF="$(CFLAGS)")
-	pkgbuild --identifier org.iraf-community.iraf.fitsutil \
+	find $(BUILDDIR)/fitsutil -name \*.[eao] -type f \
+	     -exec codesign -s - -i org.iraf-community.fitsutil {} \;
+	pkgbuild --identifier org.iraf-community.fitsutil \
 	         --root $(BUILDDIR)/fitsutil \
 	         --install-location /usr/local/lib/iraf/extern/fitsutil/ \
 	         $@ || touch $@
@@ -89,7 +97,9 @@ mscred.pkg: iraf-core.pkg
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
 	  mscred=$(BUILDDIR)/mscred/ $(MKPKG) -p mscred)
-	pkgbuild --identifier org.iraf-community.iraf.mscred \
+	find $(BUILDDIR)/mscred -name \*.[eao] -type f \
+	     -exec codesign -s - -i org.iraf-community.mscred {} \;
+	pkgbuild --identifier org.iraf-community.mscred \
 	         --root $(BUILDDIR)/mscred \
 	         --install-location /usr/local/lib/iraf/extern/mscred/ \
 	         $@ || touch $@
@@ -103,7 +113,9 @@ nfextern.pkg: iraf-core.pkg
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
 	  nfextern=$(BUILDDIR)/nfextern/ $(MKPKG) -p nfextern)
-	pkgbuild --identifier org.iraf-community.iraf.nfextern \
+	find $(BUILDDIR)/nfextern -name \*.[eao] -type f \
+	     -exec codesign -s - -i org.iraf-community.nfextern {} \;
+	pkgbuild --identifier org.iraf-community.nfextern \
 	         --root $(BUILDDIR)/nfextern \
 	         --install-location /usr/local/lib/iraf/extern/nfextern/ \
 	         $@ || touch $@
@@ -118,7 +130,9 @@ rvsao.pkg: iraf-core.pkg
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
 	  rvsao=$(BUILDDIR)/rvsao/ $(MKPKG) -p rvsao)
-	pkgbuild --identifier org.iraf-community.iraf.rvsao \
+	find $(BUILDDIR)/rvsao -name \*.[eao] -type f \
+	     -exec codesign -s - -i org.iraf-community.rvsao {} \;
+	pkgbuild --identifier org.iraf-community.rvsao \
 	         --root $(BUILDDIR)/rvsao \
 	         --install-location /usr/local/lib/iraf/extern/rvsao/ \
 	         $@ || touch $@
@@ -132,7 +146,9 @@ sptable.pkg: iraf-core.pkg
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
 	  sptable=$(BUILDDIR)/sptable/ $(MKPKG) -p sptable)
-	pkgbuild --identifier org.iraf-community.iraf.sptable \
+	find $(BUILDDIR)/sptable -name \*.[eao] -type f \
+	     -exec codesign -s - -f -i org.iraf-community.sptable {} \;
+	pkgbuild --identifier org.iraf-community.sptable \
 	         --root $(BUILDDIR)/sptable \
 	         --install-location /usr/local/lib/iraf/extern/sptable/ \
 	         $@ || touch $@
@@ -146,7 +162,9 @@ st4gem.pkg: iraf-core.pkg
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
 	  st4gem=$(BUILDDIR)/st4gem/ $(MKPKG) -p st4gem)
-	pkgbuild --identifier org.iraf-community.iraf.st4gem \
+	find $(BUILDDIR)/st4gem -name \*.[eao] -type f \
+	     -exec codesign -s - -i org.iraf-community.st4gem {} \;
+	pkgbuild --identifier org.iraf-community.st4gem \
 	         --root st4gem \
 	         --install-location /usr/local/lib/iraf/extern/st4gem/ \
 	         $@ || touch $@
@@ -160,13 +178,15 @@ xdimsum.pkg: iraf-core.pkg
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
 	  xdimsum=$(BUILDDIR)/xdimsum/ $(MKPKG) -p xdimsum)
-	pkgbuild --identifier org.iraf-community.iraf.xdimsum \
+	find $(BUILDDIR)/xdimsum -name \*.[eao] -type f \
+	     -exec codesign -s - -i org.iraf-community.xdimsum {} \;
+	pkgbuild --identifier org.iraf-community.xdimsum \
 	         --root $(BUILDDIR)/xdimsum \
 	         --install-location /usr/local/lib/iraf/extern/xdimsum/ \
 	         $@ || touch $@
 
 iraf-$(IRAFARCH).pkg: $(PKGS) \
-	  iraf_distribution.plist conclusion.html welcome.html logo.png
+	  distribution.plist conclusion.html welcome.html logo.png
 	productbuild --distribution iraf_distribution.plist \
 	             --resources . \
 	             $@

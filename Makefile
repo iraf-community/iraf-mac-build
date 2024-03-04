@@ -5,8 +5,10 @@ INSTDIR=$(shell pwd)/install
 BUILDDIR=$(shell pwd)/build
 BINDIR=$(shell pwd)/bin
 
+MACARCH=$(shell uname -m)
+
 export iraf=$(BUILDDIR)/iraf/
-ifeq ($(shell uname -m), x86_64)
+ifeq ($(MACARCH), x86_64)
   export IRAFARCH=macintel
 else
   export IRAFARCH=macos64
@@ -17,7 +19,7 @@ export MKPKG=$(iraf)unix/bin/mkpkg.e
 #export LDFLAGS=
 PATH += :$(BINDIR)
 
-all: iraf-$(IRAFARCH).pkg
+all: iraf-$(MACARCH).pkg
 
 PKGS = iraf-core.pkg x11iraf.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
        nfextern.pkg rvsao.pkg sptable.pkg st4gem.pkg xdimsum.pkg
@@ -185,11 +187,11 @@ xdimsum.pkg: iraf-core.pkg
 	         --install-location /usr/local/lib/iraf/extern/xdimsum/ \
 	         $@ || touch $@
 
-iraf-$(IRAFARCH).pkg: $(PKGS) \
-	  distribution.plist conclusion.html welcome.html logo.png
-	productbuild --distribution iraf_distribution.plist \
-	             --resources . \
-	             $@
+distribution-$(MACARCH).plist: distribution.plist
+	sed s/x86_64,arm64/$(MACARCH)/g $< > $@
+
+iraf-$(MACARCH).pkg: $(PKGS) distribution-$(MACARCH).plist conclusion.html welcome.html logo.png
+	productbuild --distribution distribution-$(MACARCH).plist --resources . $@
 
 clean:
-	rm -rf $(PKGS) iraf.pkg bin $(INSTDIR) $(BUILDDIR)
+	rm -rf $(PKGS) iraf-$(MACARCH).pkg distribution-$(MACARCH).plist bin $(INSTDIR) $(BUILDDIR)

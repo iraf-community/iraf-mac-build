@@ -24,7 +24,7 @@ jobs:
 
       - name: Build package
         run: |
-           make
+           make -j 4
 
       - name: Copy file via ssh
         if: github.ref == 'refs/heads/main'

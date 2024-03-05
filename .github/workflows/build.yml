@@ -35,6 +35,11 @@ jobs:
         run: |
            make -j 4
 
+      - name: Locally test package installation
+        run: |
+          sudo installer -pkg iraf-*64.pkg -target / -verbose
+          /usr/local/lib/iraf/test/run_tests /usr/local/lib/iraf/test/noao.astutil.md
+
       - name: Copy file via ssh
         if: github.ref == 'refs/heads/main'
         env:

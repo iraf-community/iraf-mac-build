@@ -5,12 +5,21 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: macos-14
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - name: macOS 11 (Intel)
+            os: macos-11
+
+          - name: macOS 14 (M1)
+            os: macos-14
 
     env:
-      iraf: ${{ github.workspace }}/iraf/
       TERM: ansi
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

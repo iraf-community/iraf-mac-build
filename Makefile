@@ -16,8 +16,8 @@ endif
 export MKPKG=$(iraf)unix/bin/mkpkg.e
 export RMFILES=$(iraf)unix/bin/rmfiles.e
 
-#export CFLAGS=
-#export LDFLAGS=
+export CFLAGS=-mmacosx-version-min=11 -g -O2
+export LDFLAGS=-mmacosx-version-min=11 -g -O2
 PATH += :$(BINDIR)
 
 all: iraf-$(MACARCH).pkg

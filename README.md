@@ -2,7 +2,7 @@
 
 The package can be downloaded as separate packages for Intel and ARM
 Macs from the [Releases
-page](https://github.com/olebole/iraf-mac-build/releases). It combines
+page](https://github.com/iraf-community/iraf-mac-build/releases). It combines
 the IRAF core package, x11iraf and a selection of common external
 packages.
 
@@ -15,7 +15,7 @@ quarantine attribute:
 
 Alternatively, the file can be downloaded in the command line, f.e. with
 
-    % curl -OL https://github.com/olebole/iraf-mac-build/releases/download/v2.17.1-alpha/iraf-arm64.pkg
+    % curl -OL https://github.com/iraf-community/iraf-mac-build/releases/download/v2.17.1-alpha/iraf-arm64.pkg
 
 Please keep in mind that this is an early pre-release and based on the
 development versions of the software packages. See the release notes

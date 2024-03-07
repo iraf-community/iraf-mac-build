@@ -15,7 +15,6 @@
 	<line choice="org.iraf-community.ctio"/>
 	<line choice="org.iraf-community.fitsutil"/>
 	<line choice="org.iraf-community.mscred"/>
-	<line choice="org.iraf-community.nfextern"/>
 	<line choice="org.iraf-community.rvsao"/>
 	<line choice="org.iraf-community.sptable"/>
 	<line choice="org.iraf-community.st4gem"/>
@@ -37,9 +36,6 @@
     </choice>
     <choice id="org.iraf-community.mscred" title="mscred" start_selected="false">
       <pkg-ref id="org.iraf-community.mscred">mscred.pkg</pkg-ref>
-    </choice>
-    <choice id="org.iraf-community.nfextern" title="nfextern" start_selected="false">
-      <pkg-ref id="org.iraf-community.nfextern">nfextern.pkg</pkg-ref>
     </choice>
     <choice id="org.iraf-community.rvsao" title="rvsao" start_selected="false">
       <pkg-ref id="org.iraf-community.rvsao">rvsao.pkg</pkg-ref>

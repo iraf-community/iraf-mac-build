@@ -26,7 +26,7 @@ PATH += :$(BINDIR)
 all: iraf-$(MACARCH).pkg
 
 PKGS = iraf-core.pkg x11iraf.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
-       nfextern.pkg rvsao.pkg sptable.pkg st4gem.pkg xdimsum.pkg
+       rvsao.pkg sptable.pkg st4gem.pkg xdimsum.pkg
 
 iraf-core.pkg:
 	mkdir -p $(BUILDDIR)/iraf
@@ -109,22 +109,6 @@ mscred.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.mscred \
 	         --root $(BUILDDIR)/mscred \
 	         --install-location /usr/local/lib/iraf/extern/mscred/ \
-	         $@
-
-nfextern.pkg: iraf-core.pkg
-	mkdir -p $(BUILDDIR)/nfextern
-	curl -L https://github.com/iraf-community/iraf-nfextern/archive/refs/heads/main.tar.gz | \
-	  tar xzf - -C $(BUILDDIR)/nfextern --strip-components=1
-	( cd $(BUILDDIR)/nfextern && \
-	  rm -rf bin* && \
-	  mkdir -p bin.$(IRAFARCH) && \
-	  ln -s bin.$(IRAFARCH) bin && \
-	  nfextern=$(BUILDDIR)/nfextern/ $(MKPKG) -p nfextern)
-	find $(BUILDDIR)/nfextern -name \*.[eao] -type f \
-	     -exec codesign -s - -i org.iraf-community.nfextern {} \;
-	pkgbuild --identifier org.iraf-community.nfextern \
-	         --root $(BUILDDIR)/nfextern \
-	         --install-location /usr/local/lib/iraf/extern/nfextern/ \
 	         $@
 
 rvsao.pkg: iraf-core.pkg

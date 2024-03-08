@@ -147,7 +147,7 @@ sptable.pkg: iraf-core.pkg
 
 st4gem.pkg: iraf-core.pkg
 	mkdir -p $(BUILDDIR)/st4gem
-	curl -L https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/archive/main/st4gem-main.tar.gz | \
+	curl -L https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/archive/1.0/st4gem-1.0.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/st4gem --strip-components=1
 	( cd $(BUILDDIR)/st4gem && \
 	  rm -rf bin* && \

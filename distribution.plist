@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- (C) Ole Streicher, 2024 -->
 <installer-gui-script minSpecVersion="1">
-    <product id="org.iraf-community" version="2.17.1-1"/>
-    <title>Community IRAF 2.17.1 (r1)</title>
+    <product id="org.iraf-community" version="@@RELEASE@@"/>
+    <title>Community IRAF @@RELEASE@@</title>
     <background file="logo.png" mime-type="image/png" alignment="bottomleft"/>
     <welcome file="welcome.html"/>
     <conclusion file="conclusion.html"/>
     <domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true"/>
-    <options customize="always" require-scripts="false" hostArchitectures="x86_64,arm64"/>
+    <options customize="always" require-scripts="false" hostArchitectures="@@MACARCH@@"/>
     <choices-outline>
       <line choice="org.iraf-community.iraf"/>
       <line choice="org.iraf-community.x11iraf"/>

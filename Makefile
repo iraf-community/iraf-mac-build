@@ -1,6 +1,8 @@
 # Makefile to create an installable IRAF package
 # (C) Ole Streicher, 2024
 
+RELEASE = $(shell git describe --match "v*" --always --tags | cut -c2-)
+
 INSTDIR=$(shell pwd)/install
 BUILDDIR=$(shell pwd)/build
 BINDIR=$(shell pwd)/bin
@@ -180,7 +182,7 @@ xdimsum.pkg: iraf-core.pkg
 	         $@
 
 distribution-$(MACARCH).plist: distribution.plist
-	sed s/x86_64,arm64/$(MACARCH)/g $< > $@
+	sed "s/@@MACARCH@@/$(MACARCH)/g;s/@@RELEASE@@/$(RELEASE)/g" $< > $@
 
 iraf-$(MACARCH).pkg: $(PKGS) distribution-$(MACARCH).plist conclusion.html welcome.html logo.png
 	productbuild --distribution distribution-$(MACARCH).plist --resources . $@

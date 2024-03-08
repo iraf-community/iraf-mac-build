@@ -15,7 +15,7 @@ quarantine attribute:
 
 Alternatively, the file can be downloaded in the command line, f.e. with
 
-    % curl -OL https://github.com/iraf-community/iraf-mac-build/releases/download/v2.17.1-alpha/iraf-arm64.pkg
+    % curl -OL https://github.com/iraf-community/iraf-mac-build/releases/download/v2.17.1-1a1/iraf-arm64.pkg
 
 Please keep in mind that this is an early pre-release and based on the
 development versions of the software packages. See the release notes

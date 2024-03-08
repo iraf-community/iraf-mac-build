@@ -25,7 +25,7 @@ export XC_LFLAGS = $(LDFLAGS)
 
 PATH += :$(BINDIR)
 
-all: iraf-$(MACARCH).pkg
+all: iraf-$(RELEASE)-$(MACARCH).pkg
 
 PKGS = iraf-core.pkg x11iraf.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
        rvsao.pkg sptable.pkg st4gem.pkg xdimsum.pkg
@@ -184,8 +184,8 @@ xdimsum.pkg: iraf-core.pkg
 distribution-$(MACARCH).plist: distribution.plist
 	sed "s/@@MACARCH@@/$(MACARCH)/g;s/@@RELEASE@@/$(RELEASE)/g" $< > $@
 
-iraf-$(MACARCH).pkg: $(PKGS) distribution-$(MACARCH).plist conclusion.html welcome.html logo.png
+iraf-$(RELEASE)-$(MACARCH).pkg: $(PKGS) distribution-$(MACARCH).plist conclusion.html welcome.html logo.png
 	productbuild --distribution distribution-$(MACARCH).plist --resources . $@
 
 clean:
-	rm -rf $(PKGS) iraf-$(MACARCH).pkg distribution-$(MACARCH).plist bin $(INSTDIR) $(BUILDDIR)
+	rm -rf $(PKGS) iraf-$(RELEASE)-$(MACARCH).pkg distribution-$(MACARCH).plist bin $(INSTDIR) $(BUILDDIR)

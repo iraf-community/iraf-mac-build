@@ -7,6 +7,11 @@
     <welcome file="welcome.html"/>
     <conclusion file="conclusion.html"/>
     <domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true"/>
+    <volume-check>
+      <allowed-os-versions>
+        <os-version min="@@MINVERSION@@"/>
+      </allowed-os-versions>
+    </volume-check>
     <options customize="always" require-scripts="false" hostArchitectures="@@MACARCH@@"/>
     <choices-outline>
       <line choice="org.iraf-community.iraf"/>

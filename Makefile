@@ -7,6 +7,7 @@ INSTDIR=$(shell pwd)/install
 BUILDDIR=$(shell pwd)/build
 BINDIR=$(shell pwd)/bin
 
+MINVERSION = 11
 MACARCH=$(shell uname -m)
 
 export iraf=$(BUILDDIR)/iraf/
@@ -18,8 +19,8 @@ endif
 export MKPKG=$(iraf)unix/bin/mkpkg.e
 export RMFILES=$(iraf)unix/bin/rmfiles.e
 
-export CFLAGS = -mmacosx-version-min=11 -O2
-export LDFLAGS = -mmacosx-version-min=11 -O2
+export CFLAGS = -mmacosx-version-min=$(MINVERSION) -O2
+export LDFLAGS = -mmacosx-version-min=$(MINVERSION) -O2
 export XC_CFLAGS = $(CFLAGS)
 export XC_LFLAGS = $(LDFLAGS)
 
@@ -44,6 +45,7 @@ iraf-core.pkg:
 	pkgbuild --identifier org.iraf-community.iraf \
 	         --root $(INSTDIR)/iraf \
 		 --install-location / \
+		 --min-os-version $(MINVERSION) \
 	         $@
 
 x11iraf.pkg: iraf-core.pkg
@@ -62,6 +64,7 @@ x11iraf.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.x11iraf \
 	         --root $(INSTDIR)/x11 \
 	         --install-location / \
+		 --min-os-version $(MINVERSION) \
 	         $@
 
 ctio.pkg: iraf-core.pkg
@@ -79,6 +82,7 @@ ctio.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.ctio \
 	         --root $(BUILDDIR)/ctio \
 	         --install-location /usr/local/lib/iraf/extern/ctio/ \
+		 --min-os-version $(MINVERSION) \
 	         $@
 
 fitsutil.pkg: iraf-core.pkg
@@ -95,6 +99,7 @@ fitsutil.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.fitsutil \
 	         --root $(BUILDDIR)/fitsutil \
 	         --install-location /usr/local/lib/iraf/extern/fitsutil/ \
+		 --min-os-version $(MINVERSION) \
 	         $@
 
 mscred.pkg: iraf-core.pkg
@@ -111,6 +116,7 @@ mscred.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.mscred \
 	         --root $(BUILDDIR)/mscred \
 	         --install-location /usr/local/lib/iraf/extern/mscred/ \
+		 --min-os-version $(MINVERSION) \
 	         $@
 
 rvsao.pkg: iraf-core.pkg
@@ -128,6 +134,7 @@ rvsao.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.rvsao \
 	         --root $(BUILDDIR)/rvsao \
 	         --install-location /usr/local/lib/iraf/extern/rvsao/ \
+		 --min-os-version $(MINVERSION) \
 	         $@
 
 sptable.pkg: iraf-core.pkg
@@ -145,6 +152,7 @@ sptable.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.sptable \
 	         --root $(BUILDDIR)/sptable \
 	         --install-location /usr/local/lib/iraf/extern/sptable/ \
+		 --min-os-version $(MINVERSION) \
 	         $@
 
 st4gem.pkg: iraf-core.pkg
@@ -162,6 +170,7 @@ st4gem.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.st4gem \
 	         --root $(BUILDDIR)/st4gem \
 	         --install-location /usr/local/lib/iraf/extern/st4gem/ \
+		 --min-os-version $(MINVERSION) \
 	         $@
 
 xdimsum.pkg: iraf-core.pkg
@@ -179,10 +188,11 @@ xdimsum.pkg: iraf-core.pkg
 	pkgbuild --identifier org.iraf-community.xdimsum \
 	         --root $(BUILDDIR)/xdimsum \
 	         --install-location /usr/local/lib/iraf/extern/xdimsum/ \
+		 --min-os-version $(MINVERSION) \
 	         $@
 
 distribution-$(MACARCH).plist: distribution.plist
-	sed "s/@@MACARCH@@/$(MACARCH)/g;s/@@RELEASE@@/$(RELEASE)/g" $< > $@
+	sed "s/@@MACARCH@@/$(MACARCH)/g;s/@@RELEASE@@/$(RELEASE)/g;s/@@MINVERSION@@/$(MINVERSION)/g" $< > $@
 
 iraf-$(RELEASE)-$(MACARCH).pkg: $(PKGS) distribution-$(MACARCH).plist conclusion.html welcome.html logo.png
 	productbuild --distribution distribution-$(MACARCH).plist --resources . $@

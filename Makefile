@@ -46,6 +46,7 @@ iraf-core.pkg:
 	         --root $(INSTDIR)/iraf \
 		 --install-location / \
 		 --min-os-version $(MINVERSION) \
+		 --version 2.17.1+ \
 	         $@
 
 x11iraf.pkg: iraf-core.pkg
@@ -65,6 +66,7 @@ x11iraf.pkg: iraf-core.pkg
 	         --root $(INSTDIR)/x11 \
 	         --install-location / \
 		 --min-os-version $(MINVERSION) \
+		 --version 2.1+ \
 	         $@
 
 ctio.pkg: iraf-core.pkg
@@ -83,6 +85,7 @@ ctio.pkg: iraf-core.pkg
 	         --root $(BUILDDIR)/ctio \
 	         --install-location /usr/local/lib/iraf/extern/ctio/ \
 		 --min-os-version $(MINVERSION) \
+		 --version 0+2023-11-12 \
 	         $@
 
 fitsutil.pkg: iraf-core.pkg
@@ -100,6 +103,7 @@ fitsutil.pkg: iraf-core.pkg
 	         --root $(BUILDDIR)/fitsutil \
 	         --install-location /usr/local/lib/iraf/extern/fitsutil/ \
 		 --min-os-version $(MINVERSION) \
+		 --version 0+2024-02-04 \
 	         $@
 
 mscred.pkg: iraf-core.pkg
@@ -117,6 +121,7 @@ mscred.pkg: iraf-core.pkg
 	         --root $(BUILDDIR)/mscred \
 	         --install-location /usr/local/lib/iraf/extern/mscred/ \
 		 --min-os-version $(MINVERSION) \
+		 --version 0+2023-12-12 \
 	         $@
 
 rvsao.pkg: iraf-core.pkg
@@ -135,6 +140,7 @@ rvsao.pkg: iraf-core.pkg
 	         --root $(BUILDDIR)/rvsao \
 	         --install-location /usr/local/lib/iraf/extern/rvsao/ \
 		 --min-os-version $(MINVERSION) \
+		 --version 2.8.5 \
 	         $@
 
 sptable.pkg: iraf-core.pkg
@@ -153,6 +159,7 @@ sptable.pkg: iraf-core.pkg
 	         --root $(BUILDDIR)/sptable \
 	         --install-location /usr/local/lib/iraf/extern/sptable/ \
 		 --min-os-version $(MINVERSION) \
+		 --version 1.0.pre20180612 \
 	         $@
 
 st4gem.pkg: iraf-core.pkg
@@ -171,6 +178,7 @@ st4gem.pkg: iraf-core.pkg
 	         --root $(BUILDDIR)/st4gem \
 	         --install-location /usr/local/lib/iraf/extern/st4gem/ \
 		 --min-os-version $(MINVERSION) \
+		 --version 1.0 \
 	         $@
 
 xdimsum.pkg: iraf-core.pkg
@@ -189,6 +197,7 @@ xdimsum.pkg: iraf-core.pkg
 	         --root $(BUILDDIR)/xdimsum \
 	         --install-location /usr/local/lib/iraf/extern/xdimsum/ \
 		 --min-os-version $(MINVERSION) \
+		 --version 0+2024-02-01 \
 	         $@
 
 distribution-$(MACARCH).plist: distribution.plist

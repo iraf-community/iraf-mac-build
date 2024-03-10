@@ -11,8 +11,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: macOS 11 (Intel)
-            os: macos-11
+          - name: macOS 12 (Intel)
+            os: macos-12
 
           - name: macOS 14 (M1)
             os: macos-14

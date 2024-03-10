@@ -7,7 +7,7 @@ INSTDIR=$(shell pwd)/install
 BUILDDIR=$(shell pwd)/build
 BINDIR=$(shell pwd)/bin
 
-MINVERSION = 11
+MINVERSION = 10.15
 MACARCH=$(shell uname -m)
 
 export iraf=$(BUILDDIR)/iraf/

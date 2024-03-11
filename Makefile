@@ -19,8 +19,8 @@ endif
 export MKPKG=$(iraf)unix/bin/mkpkg.e
 export RMFILES=$(iraf)unix/bin/rmfiles.e
 
-export CFLAGS = -mmacosx-version-min=$(MINVERSION) -O2
-export LDFLAGS = -mmacosx-version-min=$(MINVERSION) -O2
+export CFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) -O2
+export LDFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) -O2
 export XC_CFLAGS = $(CFLAGS)
 export XC_LFLAGS = $(LDFLAGS)
 

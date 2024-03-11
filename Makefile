@@ -39,10 +39,10 @@ iraf-core.pkg:
 	mkdir -p $(INSTDIR)/iraf
 	$(MAKE) -C $(BUILDDIR)/iraf DESTDIR=$(INSTDIR)/iraf install
 	find $(INSTDIR)/iraf -name \*.[eao] -type f \
-	     -exec codesign -s - -i org.iraf-community.iraf {} \;
+	     -exec codesign -s - -i community.iraf.core {} \;
 	mkdir -p bin
 	ln -sf $(MKPKG) bin/mkpkg
-	pkgbuild --identifier org.iraf-community.iraf \
+	pkgbuild --identifier community.iraf.core \
 	         --root $(INSTDIR)/iraf \
 		 --install-location / \
 		 --min-os-version $(MINVERSION) \
@@ -61,8 +61,8 @@ x11iraf.pkg: iraf-core.pkg
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool.man $(INSTDIR)/x11/usr/local/man/man1/ximtool.1
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/clients/ism_wcspix.e $(INSTDIR)/x11/usr/local/bin
 	find $(INSTDIR)/x11 -name \*.[eao] -type f \
-	     -exec codesign -s - -i org.iraf-community.x11iraf {} \;
-	pkgbuild --identifier org.iraf-community.x11iraf \
+	     -exec codesign -s - -i community.iraf.x11iraf {} \;
+	pkgbuild --identifier community.iraf.x11iraf \
 	         --root $(INSTDIR)/x11 \
 	         --install-location / \
 		 --min-os-version $(MINVERSION) \
@@ -80,8 +80,8 @@ ctio.pkg: iraf-core.pkg
 	  ctio=$(BUILDDIR)/ctio/ $(MKPKG) -p ctio && \
 	  $(RMFILES) -f lib/strip.ctio )
 	find $(BUILDDIR)/ctio -name \*.[eao] -type f \
-	     -exec codesign -s - -i org.iraf-community.ctio {} \;
-	pkgbuild --identifier org.iraf-community.ctio \
+	     -exec codesign -s - -i community.iraf.ctio {} \;
+	pkgbuild --identifier community.iraf.ctio \
 	         --root $(BUILDDIR)/ctio \
 	         --install-location /usr/local/lib/iraf/extern/ctio/ \
 		 --min-os-version $(MINVERSION) \
@@ -98,8 +98,8 @@ fitsutil.pkg: iraf-core.pkg
 	  ln -s bin.$(IRAFARCH) bin && \
 	  fitsutil=$(BUILDDIR)/fitsutil/ $(MKPKG) -p fitsutil HSI_LF="$(LDFLAGS)" HSI_CF="$(CFLAGS)")
 	find $(BUILDDIR)/fitsutil -name \*.[eao] -type f \
-	     -exec codesign -s - -i org.iraf-community.fitsutil {} \;
-	pkgbuild --identifier org.iraf-community.fitsutil \
+	     -exec codesign -s - -i community.iraf.fitsutil {} \;
+	pkgbuild --identifier community.iraf.fitsutil \
 	         --root $(BUILDDIR)/fitsutil \
 	         --install-location /usr/local/lib/iraf/extern/fitsutil/ \
 		 --min-os-version $(MINVERSION) \
@@ -116,8 +116,8 @@ mscred.pkg: iraf-core.pkg
 	  ln -s bin.$(IRAFARCH) bin && \
 	  mscred=$(BUILDDIR)/mscred/ $(MKPKG) -p mscred)
 	find $(BUILDDIR)/mscred -name \*.[eao] -type f \
-	     -exec codesign -s - -i org.iraf-community.mscred {} \;
-	pkgbuild --identifier org.iraf-community.mscred \
+	     -exec codesign -s - -i community.iraf.mscred {} \;
+	pkgbuild --identifier community.iraf.mscred \
 	         --root $(BUILDDIR)/mscred \
 	         --install-location /usr/local/lib/iraf/extern/mscred/ \
 		 --min-os-version $(MINVERSION) \
@@ -135,8 +135,8 @@ rvsao.pkg: iraf-core.pkg
 	  ln -s bin.$(IRAFARCH) bin && \
 	  rvsao=$(BUILDDIR)/rvsao/ $(MKPKG) -p rvsao)
 	find $(BUILDDIR)/rvsao -name \*.[eao] -type f \
-	     -exec codesign -s - -i org.iraf-community.rvsao {} \;
-	pkgbuild --identifier org.iraf-community.rvsao \
+	     -exec codesign -s - -i community.iraf.rvsao {} \;
+	pkgbuild --identifier community.iraf.rvsao \
 	         --root $(BUILDDIR)/rvsao \
 	         --install-location /usr/local/lib/iraf/extern/rvsao/ \
 		 --min-os-version $(MINVERSION) \
@@ -154,8 +154,8 @@ sptable.pkg: iraf-core.pkg
 	  sptable=$(BUILDDIR)/sptable/ $(MKPKG) -p sptable && \
 	  $(RMFILES) -f lib/strip.sptable )
 	find $(BUILDDIR)/sptable -name \*.[eao] -type f \
-	     -exec codesign -s - -f -i org.iraf-community.sptable {} \;
-	pkgbuild --identifier org.iraf-community.sptable \
+	     -exec codesign -s - -f -i community.iraf.sptable {} \;
+	pkgbuild --identifier community.iraf.sptable \
 	         --root $(BUILDDIR)/sptable \
 	         --install-location /usr/local/lib/iraf/extern/sptable/ \
 		 --min-os-version $(MINVERSION) \
@@ -173,8 +173,8 @@ st4gem.pkg: iraf-core.pkg
 	  st4gem=$(BUILDDIR)/st4gem/ $(MKPKG) -p st4gem && \
 	  $(RMFILES) -f lib/strip.st4gem )
 	find $(BUILDDIR)/st4gem -name \*.[eao] -type f \
-	     -exec codesign -s - -i org.iraf-community.st4gem {} \;
-	pkgbuild --identifier org.iraf-community.st4gem \
+	     -exec codesign -s - -i community.iraf.st4gem {} \;
+	pkgbuild --identifier community.iraf.st4gem \
 	         --root $(BUILDDIR)/st4gem \
 	         --install-location /usr/local/lib/iraf/extern/st4gem/ \
 		 --min-os-version $(MINVERSION) \
@@ -192,8 +192,8 @@ xdimsum.pkg: iraf-core.pkg
 	  xdimsum=$(BUILDDIR)/xdimsum/ $(MKPKG) -p xdimsum && \
 	  $(RMFILES) -f lib/strip.xdimsum )
 	find $(BUILDDIR)/xdimsum -name \*.[eao] -type f \
-	     -exec codesign -s - -i org.iraf-community.xdimsum {} \;
-	pkgbuild --identifier org.iraf-community.xdimsum \
+	     -exec codesign -s - -i community.iraf.xdimsum {} \;
+	pkgbuild --identifier community.iraf.xdimsum \
 	         --root $(BUILDDIR)/xdimsum \
 	         --install-location /usr/local/lib/iraf/extern/xdimsum/ \
 		 --min-os-version $(MINVERSION) \

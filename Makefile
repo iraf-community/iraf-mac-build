@@ -54,11 +54,11 @@ x11iraf.pkg: iraf-core.pkg
 	curl -L https://github.com/iraf-community/x11iraf/archive/refs/heads/main.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/x11iraf --strip-components=1
 	$(MAKE) -C $(BUILDDIR)/x11iraf
-	mkdir -p $(INSTDIR)/x11/usr/local/bin $(INSTDIR)/x11/usr/local/man/man1 $(INSTDIR)/x11/usr/local/share/terminfo
+	mkdir -p $(INSTDIR)/x11/usr/local/bin $(INSTDIR)/x11/usr/local/share/man/man1 $(INSTDIR)/x11/usr/local/share/terminfo
 	install -m755 $(BUILDDIR)/x11iraf/xgterm/xgterm $(INSTDIR)/x11/usr/local/bin
-	install -m755 $(BUILDDIR)/x11iraf/xgterm/xgterm.man $(INSTDIR)/x11/usr/local/man/man1/xgterm.1
+	install -m755 $(BUILDDIR)/x11iraf/xgterm/xgterm.man $(INSTDIR)/x11/usr/local/share/man/man1/xgterm.1
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool $(INSTDIR)/x11/usr/local/bin
-	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool.man $(INSTDIR)/x11/usr/local/man/man1/ximtool.1
+	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool.man $(INSTDIR)/x11/usr/local/share/man/man1/ximtool.1
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/clients/ism_wcspix.e $(INSTDIR)/x11/usr/local/bin
 	TERMINFO=$(INSTDIR)/x11/usr/local/share/terminfo tic $(BUILDDIR)/x11iraf/xgterm/xgterm.terminfo
 	find $(INSTDIR)/x11 -name \*.[eao] -type f \

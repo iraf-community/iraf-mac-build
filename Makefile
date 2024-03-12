@@ -21,8 +21,8 @@ export RMFILES=$(iraf)unix/bin/rmfiles.e
 
 export CFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) -O2
 export LDFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) -O2
-export XC_CFLAGS = $(CFLAGS)
-export XC_LFLAGS = $(LDFLAGS)
+export XC_CFLAGS = $(CFLAGS) -I$(BUILDDIR)/cfitsio
+export XC_LFLAGS = $(LDFLAGS) -L$(BUILDDIR)/cfitsio
 
 PATH += :$(BINDIR)
 
@@ -89,13 +89,15 @@ ctio.pkg: core.pkg
 		 --version 0+2023-11-12 \
 	         $@
 
-fitsutil.pkg: core.pkg
+# libcfitsio.a is required for fitsutil
+$(BUILDDIR)/cfitsio/libcfitsio.a:
 	mkdir -p $(BUILDDIR)/cfitsio
 	curl -L https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio-4.4.0.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/cfitsio --strip-components=1
-	( cd $(BUILDDIR)/cfitsio && \
-	  ./configure --disable-curl && \
-	  $(MAKE) libcfitsio.a )
+	cd $(BUILDDIR)/cfitsio && ./configure --disable-curl
+	$(MAKE) -C $(BUILDDIR)/cfitsio libcfitsio.a
+
+fitsutil.pkg: core.pkg $(BUILDDIR)/cfitsio/libcfitsio.a
 	mkdir -p $(BUILDDIR)/fitsutil
 	curl -L https://github.com/iraf-community/iraf-fitsutil/archive/refs/heads/main.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/fitsutil --strip-components=1
@@ -103,10 +105,7 @@ fitsutil.pkg: core.pkg
 	  rm -rf bin* && \
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
-	  $(MKPKG) -p fitsutil \
-		   fitsutil=$(BUILDDIR)/fitsutil/ \
-		   XC_LFLAGS="$(XC_LFLAGS) -L$(BUILDDIR)/cfitsio" \
-		   XC_CFLAGS="$(XC_CFLAGS) -I$(BUILDDIR)/cfitsio" )
+	  $(MKPKG) -p fitsutil fitsutil=$(BUILDDIR)/fitsutil/ )
 	find $(BUILDDIR)/fitsutil -name \*.[eao] -type f \
 	     -exec codesign -s - -i community.iraf.fitsutil {} \;
 	pkgbuild --identifier community.iraf.fitsutil \

@@ -19,19 +19,19 @@ endif
 export MKPKG=$(iraf)unix/bin/mkpkg.e
 export RMFILES=$(iraf)unix/bin/rmfiles.e
 
-export CFLAGS = -mmacosx-version-min=$(MINVERSION) -O2
-export LDFLAGS = -mmacosx-version-min=$(MINVERSION) -O2
-export XC_CFLAGS = $(CFLAGS)
-export XC_LFLAGS = $(LDFLAGS)
+export CFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) -O2
+export LDFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) -O2
+export XC_CFLAGS = $(CFLAGS) -I$(BUILDDIR)/cfitsio
+export XC_LFLAGS = $(LDFLAGS) -L$(BUILDDIR)/cfitsio
 
 PATH += :$(BINDIR)
 
 all: iraf-$(RELEASE)-$(MACARCH).pkg
 
-PKGS = iraf-core.pkg x11iraf.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
+PKGS = core.pkg x11iraf.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
        rvsao.pkg sptable.pkg st4gem.pkg xdimsum.pkg
 
-iraf-core.pkg:
+core.pkg:
 	mkdir -p $(BUILDDIR)/iraf
 	curl -L https://github.com/iraf-community/iraf/archive/refs/heads/main.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/iraf --strip-components=1
@@ -49,7 +49,7 @@ iraf-core.pkg:
 		 --version 2.17.1+ \
 	         $@
 
-x11iraf.pkg: iraf-core.pkg
+x11iraf.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/x11iraf
 	curl -L https://github.com/iraf-community/x11iraf/archive/refs/heads/main.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/x11iraf --strip-components=1
@@ -70,7 +70,7 @@ x11iraf.pkg: iraf-core.pkg
 		 --version 2.1+ \
 	         $@
 
-ctio.pkg: iraf-core.pkg
+ctio.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/ctio
 	curl -L https://github.com/iraf-community/iraf-ctio/archive/refs/heads/main.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/ctio --strip-components=1
@@ -89,13 +89,15 @@ ctio.pkg: iraf-core.pkg
 		 --version 0+2023-11-12 \
 	         $@
 
-fitsutil.pkg: iraf-core.pkg
+# libcfitsio.a is required for fitsutil
+$(BUILDDIR)/cfitsio/libcfitsio.a:
 	mkdir -p $(BUILDDIR)/cfitsio
 	curl -L https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio-4.4.0.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/cfitsio --strip-components=1
-	( cd $(BUILDDIR)/cfitsio && \
-	  ./configure --disable-curl && \
-	  $(MAKE) libcfitsio.a )
+	cd $(BUILDDIR)/cfitsio && ./configure --disable-curl
+	$(MAKE) -C $(BUILDDIR)/cfitsio libcfitsio.a
+
+fitsutil.pkg: core.pkg $(BUILDDIR)/cfitsio/libcfitsio.a
 	mkdir -p $(BUILDDIR)/fitsutil
 	curl -L https://github.com/iraf-community/iraf-fitsutil/archive/refs/heads/main.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/fitsutil --strip-components=1
@@ -103,10 +105,7 @@ fitsutil.pkg: iraf-core.pkg
 	  rm -rf bin* && \
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
-	  $(MKPKG) -p fitsutil \
-		   fitsutil=$(BUILDDIR)/fitsutil/ \
-		   XC_LFLAGS="$(XC_LFLAGS) -L$(BUILDDIR)/cfitsio" \
-		   XC_CFLAGS="$(XC_CFLAGS) -I$(BUILDDIR)/cfitsio" )
+	  $(MKPKG) -p fitsutil fitsutil=$(BUILDDIR)/fitsutil/ )
 	find $(BUILDDIR)/fitsutil -name \*.[eao] -type f \
 	     -exec codesign -s - -i community.iraf.fitsutil {} \;
 	pkgbuild --identifier community.iraf.fitsutil \
@@ -116,7 +115,7 @@ fitsutil.pkg: iraf-core.pkg
 		 --version 0+2024-02-04 \
 	         $@
 
-mscred.pkg: iraf-core.pkg
+mscred.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/mscred
 	curl -L https://github.com/iraf-community/iraf-mscred/archive/refs/heads/main.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/mscred --strip-components=1
@@ -134,7 +133,7 @@ mscred.pkg: iraf-core.pkg
 		 --version 0+2023-12-12 \
 	         $@
 
-rvsao.pkg: iraf-core.pkg
+rvsao.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/rvsao
 	curl -L http://tdc-www.harvard.edu/iraf/rvsao/rvsao-2.8.5.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/rvsao --strip-components=1
@@ -153,7 +152,7 @@ rvsao.pkg: iraf-core.pkg
 		 --version 2.8.5 \
 	         $@
 
-sptable.pkg: iraf-core.pkg
+sptable.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/sptable
 	curl -L https://github.com/iraf-community/iraf-sptable/archive/refs/tags/1.0.pre20180612.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/sptable --strip-components=1
@@ -172,7 +171,7 @@ sptable.pkg: iraf-core.pkg
 		 --version 1.0.pre20180612 \
 	         $@
 
-st4gem.pkg: iraf-core.pkg
+st4gem.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/st4gem
 	curl -L https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/archive/1.0/st4gem-1.0.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/st4gem --strip-components=1
@@ -191,7 +190,7 @@ st4gem.pkg: iraf-core.pkg
 		 --version 1.0 \
 	         $@
 
-xdimsum.pkg: iraf-core.pkg
+xdimsum.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/xdimsum
 	curl -L https://github.com/iraf-community/iraf-xdimsum/archive/refs/heads/main.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/xdimsum --strip-components=1

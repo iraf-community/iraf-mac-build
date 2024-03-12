@@ -29,7 +29,7 @@
       </line>
     </choices-outline>
     <choice id="community.iraf.core" title="IRAF core" enabled="false">
-      <pkg-ref id="community.iraf.core">iraf-core.pkg</pkg-ref>
+      <pkg-ref id="community.iraf.core">core.pkg</pkg-ref>
     </choice>
     <choice id="community.iraf.x11iraf" title="xgterm and ximtool">
       <pkg-ref id="community.iraf.x11iraf">x11iraf.pkg</pkg-ref>

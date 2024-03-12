@@ -39,8 +39,8 @@ jobs:
 
       - name: Locally test package installation
         run: |
-          cp iraf-*64.pkg /tmp
-          sudo installer -pkg /tmp/iraf-*64.pkg -target / -verbose
+          cp iraf-*.pkg /tmp
+          sudo installer -pkg /tmp/iraf-*.pkg -target / -verbose
           /usr/local/lib/iraf/test/run_tests /usr/local/lib/iraf/test/noao.astutil.md
 
       - name: Copy file via ssh
@@ -49,4 +49,4 @@ jobs:
         run: |
           ssh-agent -a $SSH_AUTH_SOCK
           ssh-add -v - <<< "${{ secrets.SSH_KEY }}"
-          scp -o StrictHostKeyChecking=no iraf-*64.pkg iraf@olebole.net:dist/
+          scp -o StrictHostKeyChecking=no iraf-*.pkg iraf@olebole.net:dist/

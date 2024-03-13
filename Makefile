@@ -40,7 +40,10 @@ core.pkg:
 	$(MAKE) -C $(BUILDDIR)/iraf DESTDIR=$(INSTDIR)/iraf install
 	for exe in $$(find $(INSTDIR)/iraf -name \*.e -type f) ; do \
 	    BASE=`basename $${exe} | cut -d. -f1` ; \
-	    codesign -s - -i community.iraf.core.$${BASE} $${exe} ; \
+	    codesign -s - \
+	             --timestamp \
+	             -o runtime \
+	             -i community.iraf.core.$${BASE} $${exe} ; \
 	done
 	mkdir -p bin
 	ln -sf $(MKPKG) bin/mkpkg
@@ -216,7 +219,7 @@ xdimsum.pkg: core.pkg
 	  $(RMFILES) -f lib/strip.xdimsum )
 	for exe in $$(find $(BUILD)/xdimsum -name \*.e -type f) ; do \
 	    BASE=`basename $${exe} | cut -d. -f1` ; \
-	    codesign -s - -i community.iraf.xdimsum.$${BASE} $${exe} ; \
+	    codesign -vv -s - -i community.iraf.xdimsum.$${BASE} $${exe} ; \
 	done
 	pkgbuild --identifier community.iraf.xdimsum \
 	         --root $(BUILDDIR)/xdimsum \

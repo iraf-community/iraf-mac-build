@@ -41,7 +41,7 @@ core.pkg:
 	for exe in $$(find $(INSTDIR)/iraf -name \*.e -type f) ; do \
 	    BASE=`basename $${exe} | cut -d. -f1` ; \
 	    codesign -v \
-	             -s - \
+	             -s "Ole Streicher" \
 	             --timestamp \
 	             -o runtime \
 	             -i community.iraf.core.$${BASE} \
@@ -69,13 +69,13 @@ x11iraf.pkg: core.pkg
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/clients/ism_wcspix.e $(INSTDIR)/x11/usr/local/bin
 	TERMINFO=$(INSTDIR)/x11/usr/local/share/terminfo tic $(BUILDDIR)/x11iraf/xgterm/xgterm.terminfo
 	codesign -v \
-	         -s - \
+	         -s "Ole Streicher" \
 	         --timestamp \
 	         -o runtime \
 	         -i community.iraf.x11iraf.xgterm \
 	         $(INSTDIR)/x11/usr/local/bin/xgterm
 	codesign -v \
-	         -s - \
+	         -s "Ole Streicher" \
 	         --timestamp \
 	         -o runtime \
 	         -i community.iraf.x11iraf.ximtool \
@@ -100,7 +100,7 @@ ctio.pkg: core.pkg
 	for exe in $$(find $(BUILDDIR)/ctio -name \*.e -type f) ; do \
 	    BASE=`basename $${exe} | cut -d. -f1` ; \
 	    codesign -v \
-	             -s - \
+	             -s "Ole Streicher" \
 	             --timestamp \
 	             -o runtime \
 	             -i community.iraf.ctio.$${BASE} \
@@ -133,7 +133,7 @@ fitsutil.pkg: core.pkg $(BUILDDIR)/cfitsio/libcfitsio.a
 	for exe in $$(find $(BUILDDIR)/fitsutil -name \*.e -type f) ; do \
 	    BASE=`basename $${exe} | cut -d. -f1` ; \
 	    codesign -v \
-	             -s - \
+	             -s "Ole Streicher" \
 	             --timestamp \
 	             -o runtime \
 	             -i community.iraf.fitsutil.$${BASE} \
@@ -158,7 +158,7 @@ mscred.pkg: core.pkg
 	for exe in $$(find $(BUILDDIR)/mscred -name \*.e -type f) ; do \
 	    BASE=`basename $${exe} | cut -d. -f1` ; \
 	    codesign -v \
-	             -s - \
+	             -s "Ole Streicher" \
 	             --timestamp \
 	             -o runtime \
 	             -i community.iraf.mscred.$${BASE} \
@@ -184,7 +184,7 @@ rvsao.pkg: core.pkg
 	for exe in $$(find $(BUILDDIR)/rvsao -name \*.e -type f) ; do \
 	    BASE=`basename $${exe} | cut -d. -f1` ; \
 	    codesign -v \
-	             -s - \
+	             -s "Ole Streicher" \
 	             --timestamp \
 	             -o runtime \
 	             -i community.iraf.rvsao.$${BASE} \
@@ -210,7 +210,7 @@ sptable.pkg: core.pkg
 	for exe in $$(find $(BUILDDIR)/sptable -name \*.e -type f) ; do \
 	    BASE=`basename $${exe} | cut -d. -f1` ; \
 	    codesign -v \
-	             -s - \
+	             -s "Ole Streicher" \
 	             --timestamp \
 	             -o runtime \
 	             -i community.iraf.sptable.$${BASE} \
@@ -236,7 +236,7 @@ st4gem.pkg: core.pkg
 	for exe in $$(find $(BUILDDIR)/st4gem -name \*.e -type f) ; do \
 	    BASE=`basename $${exe} | cut -d. -f1` ; \
 	    codesign -v \
-	             -s - \
+	             -s "Ole Streicher" \
 	             --timestamp \
 	             -o runtime \
 	             -i community.iraf.st4gem.$${BASE} \
@@ -262,7 +262,7 @@ xdimsum.pkg: core.pkg
 	for exe in $$(find $(BUILDDIR)/xdimsum -name \*.e -type f) ; do \
 	    BASE=`basename $${exe} | cut -d. -f1` ; \
 	    codesign -v \
-	             -s - \
+	             -s "Ole Streicher" \
 	             --timestamp \
 	             -o runtime \
 	             -i community.iraf.xdimsum.$${BASE} \

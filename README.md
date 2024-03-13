@@ -11,7 +11,7 @@ when downloaded. This can be avoided by right-clicking and then
 selecting "Open" instead of double-clicking, or by removing the
 quarantine attribute:
 
-    % xattr -d com.apple.quarantine iraf-arm64.dmg
+    % xattr -d com.apple.quarantine iraf-arm64.pkg
 
 Alternatively, the file can be downloaded in the command line, f.e. with
 

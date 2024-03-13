@@ -38,8 +38,10 @@ core.pkg:
 	$(MAKE) -C $(BUILDDIR)/iraf
 	mkdir -p $(INSTDIR)/iraf
 	$(MAKE) -C $(BUILDDIR)/iraf DESTDIR=$(INSTDIR)/iraf install
-	find $(INSTDIR)/iraf -name \*.[eao] -type f \
-	     -exec codesign -s - -i community.iraf.core {} \;
+	for exe in $$(find $(INSTDIR)/iraf -name \*.e -type f) ; do \
+	    BASE=`basename $${exe} | cut -d. -f1` ; \
+	    codesign -s - -i community.iraf.core.$${BASE} $${exe} ; \
+	done
 	mkdir -p bin
 	ln -sf $(MKPKG) bin/mkpkg
 	pkgbuild --identifier community.iraf.core \
@@ -61,8 +63,8 @@ x11iraf.pkg: core.pkg
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool.man $(INSTDIR)/x11/usr/local/share/man/man1/ximtool.1
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/clients/ism_wcspix.e $(INSTDIR)/x11/usr/local/bin
 	TERMINFO=$(INSTDIR)/x11/usr/local/share/terminfo tic $(BUILDDIR)/x11iraf/xgterm/xgterm.terminfo
-	find $(INSTDIR)/x11 -name \*.[eao] -type f \
-	     -exec codesign -s - -i community.iraf.x11iraf {} \;
+	codesign -s - -i community.iraf.x11iraf.xgterm $(INSTDIR)/x11/usr/local/bin/xgterm
+	codesign -s - -i community.iraf.x11iraf.ximtool $(INSTDIR)/x11/usr/local/bin/ximtool
 	pkgbuild --identifier community.iraf.x11iraf \
 	         --root $(INSTDIR)/x11 \
 	         --install-location / \
@@ -80,8 +82,10 @@ ctio.pkg: core.pkg
 	  ln -s bin.$(IRAFARCH) bin && \
 	  ctio=$(BUILDDIR)/ctio/ $(MKPKG) -p ctio && \
 	  $(RMFILES) -f lib/strip.ctio )
-	find $(BUILDDIR)/ctio -name \*.[eao] -type f \
-	     -exec codesign -s - -i community.iraf.ctio {} \;
+	for exe in $$(find $(BUILD)/ctio -name \*.e -type f) ; do \
+	    BASE=`basename $${exe} | cut -d. -f1` ; \
+	    codesign -s - -i community.iraf.ctio.$${BASE} $${exe} ; \
+	done
 	pkgbuild --identifier community.iraf.ctio \
 	         --root $(BUILDDIR)/ctio \
 	         --install-location /usr/local/lib/iraf/extern/ctio/ \
@@ -106,8 +110,10 @@ fitsutil.pkg: core.pkg $(BUILDDIR)/cfitsio/libcfitsio.a
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
 	  $(MKPKG) -p fitsutil fitsutil=$(BUILDDIR)/fitsutil/ )
-	find $(BUILDDIR)/fitsutil -name \*.[eao] -type f \
-	     -exec codesign -s - -i community.iraf.fitsutil {} \;
+	for exe in $$(find $(BUILD)/fitsutil -name \*.e -type f) ; do \
+	    BASE=`basename $${exe} | cut -d. -f1` ; \
+	    codesign -s - -i community.iraf.fitsutil.$${BASE} $${exe} ; \
+	done
 	pkgbuild --identifier community.iraf.fitsutil \
 	         --root $(BUILDDIR)/fitsutil \
 	         --install-location /usr/local/lib/iraf/extern/fitsutil/ \
@@ -124,8 +130,10 @@ mscred.pkg: core.pkg
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
 	  mscred=$(BUILDDIR)/mscred/ $(MKPKG) -p mscred)
-	find $(BUILDDIR)/mscred -name \*.[eao] -type f \
-	     -exec codesign -s - -i community.iraf.mscred {} \;
+	for exe in $$(find $(BUILD)/mscred -name \*.e -type f) ; do \
+	    BASE=`basename $${exe} | cut -d. -f1` ; \
+	    codesign -s - -i community.iraf.mscred.$${BASE} $${exe} ; \
+	done
 	pkgbuild --identifier community.iraf.mscred \
 	         --root $(BUILDDIR)/mscred \
 	         --install-location /usr/local/lib/iraf/extern/mscred/ \
@@ -143,8 +151,10 @@ rvsao.pkg: core.pkg
 	  mkdir -p bin.$(IRAFARCH) && \
 	  ln -s bin.$(IRAFARCH) bin && \
 	  rvsao=$(BUILDDIR)/rvsao/ $(MKPKG) -p rvsao)
-	find $(BUILDDIR)/rvsao -name \*.[eao] -type f \
-	     -exec codesign -s - -i community.iraf.rvsao {} \;
+	for exe in $$(find $(BUILD)/rvsao -name \*.e -type f) ; do \
+	    BASE=`basename $${exe} | cut -d. -f1` ; \
+	    codesign -s - -i community.iraf.rvsao.$${BASE} $${exe} ; \
+	done
 	pkgbuild --identifier community.iraf.rvsao \
 	         --root $(BUILDDIR)/rvsao \
 	         --install-location /usr/local/lib/iraf/extern/rvsao/ \
@@ -162,8 +172,10 @@ sptable.pkg: core.pkg
 	  ln -s bin.$(IRAFARCH) bin && \
 	  sptable=$(BUILDDIR)/sptable/ $(MKPKG) -p sptable && \
 	  $(RMFILES) -f lib/strip.sptable )
-	find $(BUILDDIR)/sptable -name \*.[eao] -type f \
-	     -exec codesign -s - -f -i community.iraf.sptable {} \;
+	for exe in $$(find $(BUILD)/sptable -name \*.e -type f) ; do \
+	    BASE=`basename $${exe} | cut -d. -f1` ; \
+	    codesign -s - -i community.iraf.sptable.$${BASE} $${exe} ; \
+	done
 	pkgbuild --identifier community.iraf.sptable \
 	         --root $(BUILDDIR)/sptable \
 	         --install-location /usr/local/lib/iraf/extern/sptable/ \
@@ -181,8 +193,10 @@ st4gem.pkg: core.pkg
 	  ln -s bin.$(IRAFARCH) bin && \
 	  st4gem=$(BUILDDIR)/st4gem/ $(MKPKG) -p st4gem && \
 	  $(RMFILES) -f lib/strip.st4gem )
-	find $(BUILDDIR)/st4gem -name \*.[eao] -type f \
-	     -exec codesign -s - -i community.iraf.st4gem {} \;
+	for exe in $$(find $(BUILD)/st4gem -name \*.e -type f) ; do \
+	    BASE=`basename $${exe} | cut -d. -f1` ; \
+	    codesign -s - -i community.iraf.st4gem.$${BASE} $${exe} ; \
+	done
 	pkgbuild --identifier community.iraf.st4gem \
 	         --root $(BUILDDIR)/st4gem \
 	         --install-location /usr/local/lib/iraf/extern/st4gem/ \
@@ -200,8 +214,10 @@ xdimsum.pkg: core.pkg
 	  ln -s bin.$(IRAFARCH) bin && \
 	  xdimsum=$(BUILDDIR)/xdimsum/ $(MKPKG) -p xdimsum && \
 	  $(RMFILES) -f lib/strip.xdimsum )
-	find $(BUILDDIR)/xdimsum -name \*.[eao] -type f \
-	     -exec codesign -s - -i community.iraf.xdimsum {} \;
+	for exe in $$(find $(BUILD)/xdimsum -name \*.e -type f) ; do \
+	    BASE=`basename $${exe} | cut -d. -f1` ; \
+	    codesign -s - -i community.iraf.xdimsum.$${BASE} $${exe} ; \
+	done
 	pkgbuild --identifier community.iraf.xdimsum \
 	         --root $(BUILDDIR)/xdimsum \
 	         --install-location /usr/local/lib/iraf/extern/xdimsum/ \

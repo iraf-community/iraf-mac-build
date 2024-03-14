@@ -31,9 +31,10 @@ all: iraf-$(RELEASE)-$(MACARCH).pkg
 PKGS = core.pkg x11iraf.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
        rvsao.pkg sptable.pkg st4gem.pkg xdimsum.pkg
 
+
 core.pkg:
 	mkdir -p $(BUILDDIR)/iraf
-	curl -L https://github.com/iraf-community/iraf/archive/refs/heads/main.tar.gz | \
+	curl -L https://github.com/iraf-community/iraf/archive/c420938.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/iraf --strip-components=1
 	$(MAKE) -C $(BUILDDIR)/iraf
 	mkdir -p $(INSTDIR)/iraf
@@ -51,7 +52,7 @@ core.pkg:
 
 x11iraf.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/x11iraf
-	curl -L https://github.com/iraf-community/x11iraf/archive/refs/heads/main.tar.gz | \
+	curl -L https://github.com/iraf-community/x11iraf/archive/refs/tags/v2.1.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/x11iraf --strip-components=1
 	$(MAKE) -C $(BUILDDIR)/x11iraf
 	mkdir -p $(INSTDIR)/x11/usr/local/bin $(INSTDIR)/x11/usr/local/share/man/man1 $(INSTDIR)/x11/usr/local/share/terminfo
@@ -72,7 +73,7 @@ x11iraf.pkg: core.pkg
 
 ctio.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/ctio
-	curl -L https://github.com/iraf-community/iraf-ctio/archive/refs/heads/main.tar.gz | \
+	curl -L https://github.com/iraf-community/iraf-ctio/archive/a6113fe.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/ctio --strip-components=1
 	( cd $(BUILDDIR)/ctio && \
 	  rm -rf bin* && \
@@ -99,7 +100,7 @@ $(BUILDDIR)/cfitsio/libcfitsio.a:
 
 fitsutil.pkg: core.pkg $(BUILDDIR)/cfitsio/libcfitsio.a
 	mkdir -p $(BUILDDIR)/fitsutil
-	curl -L https://github.com/iraf-community/iraf-fitsutil/archive/refs/heads/main.tar.gz | \
+	curl -L https://github.com/iraf-community/iraf-fitsutil/archive/0858bbb.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/fitsutil --strip-components=1
 	( cd $(BUILDDIR)/fitsutil && \
 	  rm -rf bin* && \
@@ -117,7 +118,7 @@ fitsutil.pkg: core.pkg $(BUILDDIR)/cfitsio/libcfitsio.a
 
 mscred.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/mscred
-	curl -L https://github.com/iraf-community/iraf-mscred/archive/refs/heads/main.tar.gz | \
+	curl -L https://github.com/iraf-community/iraf-mscred/archive/8c160e5.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/mscred --strip-components=1
 	( cd $(BUILDDIR)/mscred && \
 	  rm -rf bin* && \
@@ -192,7 +193,7 @@ st4gem.pkg: core.pkg
 
 xdimsum.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/xdimsum
-	curl -L https://github.com/iraf-community/iraf-xdimsum/archive/refs/heads/main.tar.gz | \
+	curl -L https://github.com/iraf-community/iraf-xdimsum/archive/6dfc2de.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/xdimsum --strip-components=1
 	( cd $(BUILDDIR)/xdimsum && \
 	  rm -rf bin* && \

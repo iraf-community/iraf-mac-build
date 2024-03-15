@@ -54,6 +54,7 @@ x11iraf.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/x11iraf
 	curl -L https://github.com/iraf-community/x11iraf/archive/refs/tags/v2.1.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/x11iraf --strip-components=1
+	patch -d $(BUILDDIR)/x11iraf -p1 < patches/x11iraf/0001-Force-setting-of-local-terminfo-database.patch
 	$(MAKE) -C $(BUILDDIR)/x11iraf
 	mkdir -p $(INSTDIR)/x11/usr/local/bin $(INSTDIR)/x11/usr/local/share/man/man1 $(INSTDIR)/x11/usr/local/share/terminfo
 	install -m755 $(BUILDDIR)/x11iraf/xgterm/xgterm $(INSTDIR)/x11/usr/local/bin

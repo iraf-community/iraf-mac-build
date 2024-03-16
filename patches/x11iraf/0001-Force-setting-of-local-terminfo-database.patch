@@ -1,0 +1,24 @@
+From 0bb53427cf4b80671fe1279bb355d4130d62b4d8 Mon Sep 17 00:00:00 2001
+From: Ole Streicher <olebole@debian.org>
+Date: Fri, 15 Mar 2024 15:44:54 +0100
+Subject: [PATCH] Force setting of local terminfo database
+
+---
+ xgterm/main.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/xgterm/main.c b/xgterm/main.c
+index 2ec1437..7d4cd10 100644
+--- a/xgterm/main.c
++++ b/xgterm/main.c
+@@ -1026,6 +1026,7 @@ char **argv;
+ #ifdef I18N
+         setlocale(LC_ALL, NULL);
+ #endif
++	putenv("TERMINFO=/usr/local/share/terminfo");
+ 
+ 	ProgramName = argv[0];
+ 
+-- 
+2.43.0
+

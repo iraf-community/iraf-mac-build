@@ -36,6 +36,8 @@ core.pkg:
 	mkdir -p $(BUILDDIR)/iraf
 	curl -L https://github.com/iraf-community/iraf/archive/refs/tags/v2.17.1.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/iraf --strip-components=1
+	patch -d $(BUILDDIR)/iraf -p1 < patches/core/0001-fix-DESTDIR-in-Makefile.patch
+	patch -d $(BUILDDIR)/iraf -p1 < patches/core/0002-Create-bindir-and-includedir-on-libvotable-install.patch
 	$(MAKE) -C $(BUILDDIR)/iraf
 	mkdir -p $(INSTDIR)/iraf
 	$(MAKE) -C $(BUILDDIR)/iraf DESTDIR=$(INSTDIR)/iraf install

@@ -28,7 +28,8 @@
 	<line choice="community.iraf.xdimsum"/>
       </line>
     </choices-outline>
-    <choice id="community.iraf.core" title="IRAF core" enabled="false">
+    <choice id="community.iraf.core" title="IRAF"
+	    description="IRAF core package">
       <pkg-ref id="community.iraf.core">core.pkg</pkg-ref>
     </choice>
     <choice id="community.iraf.x11iraf" title="xgterm and ximtool">

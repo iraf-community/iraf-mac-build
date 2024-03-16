@@ -32,29 +32,44 @@
 	    description="IRAF core package">
       <pkg-ref id="community.iraf.core">core.pkg</pkg-ref>
     </choice>
-    <choice id="community.iraf.x11iraf" title="xgterm and ximtool">
+    <choice id="community.iraf.x11iraf" title="X11IRAF"
+	    description="X11 terminal emulator (xgterm) and interactive image display (ximtool)">
       <pkg-ref id="community.iraf.x11iraf">x11iraf.pkg</pkg-ref>
     </choice>
     <choice id="community.iraf.external" title="External packages"/>
-    <choice id="community.iraf.ctio" title="ctio" start_selected="false">
+    <choice id="community.iraf.ctio" title="ctio"
+	    description="Tools from the Cerro Tololo Inter-American Observatory"
+	    start_selected="false">
       <pkg-ref id="community.iraf.ctio">ctio.pkg</pkg-ref>
     </choice>
-    <choice id="community.iraf.fitsutil" title="fitsutil" start_selected="false">
+    <choice id="community.iraf.fitsutil" title="fitsutil"
+	    description="Utilities for single and multiple FITS files"
+	    start_selected="false">
       <pkg-ref id="community.iraf.fitsutil">fitsutil.pkg</pkg-ref>
     </choice>
-    <choice id="community.iraf.mscred" title="mscred" start_selected="false">
+    <choice id="community.iraf.mscred" title="mscred"
+	    description="Mosaic CCD reduction package"
+	    start_selected="false">
       <pkg-ref id="community.iraf.mscred">mscred.pkg</pkg-ref>
     </choice>
-    <choice id="community.iraf.rvsao" title="rvsao" start_selected="false">
+    <choice id="community.iraf.rvsao" title="rvsao"
+	    description="Radial velocity package"
+	    start_selected="false">
       <pkg-ref id="community.iraf.rvsao">rvsao.pkg</pkg-ref>
     </choice>
-    <choice id="community.iraf.sptable" title="sptable" start_selected="false">
+    <choice id="community.iraf.sptable" title="sptable"
+	    description="Tabular spectra package"
+	    start_selected="false">
       <pkg-ref id="community.iraf.sptable">sptable.pkg</pkg-ref>
     </choice>
-    <choice id="community.iraf.st4gem" title="st4gem" start_selected="false">
+    <choice id="community.iraf.st4gem" title="st4gem"
+	    description="Selected tasks from STSDAS"
+	    start_selected="false">
       <pkg-ref id="community.iraf.st4gem">st4gem.pkg</pkg-ref>
     </choice>
-    <choice id="community.iraf.xdimsum" title="xdimsum" start_selected="false">
+    <choice id="community.iraf.xdimsum" title="xdimsum"
+	    description=" Deep Infrared Mosaicing Software"
+	    start_selected="false">
       <pkg-ref id="community.iraf.xdimsum">xdimsum.pkg</pkg-ref>
     </choice>
 </installer-gui-script>

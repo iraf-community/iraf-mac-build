@@ -3,19 +3,28 @@
 
 RELEASE = $(shell git describe --match "v*" --always --tags | cut -c2-)
 
-INSTDIR=$(shell pwd)/install
-BUILDDIR=$(shell pwd)/build
-BINDIR=$(shell pwd)/bin
+INSTDIR = $(shell pwd)/install
+BUILDDIR = $(shell pwd)/build
+BINDIR = $(shell pwd)/bin
 
-MINVERSION = 10.10
-MACARCH=$(shell uname -m)
+MACARCH = $(shell uname -m)
 
-export iraf=$(BUILDDIR)/iraf/
-ifeq ($(MACARCH), x86_64)
-  export IRAFARCH=macintel
-else
-  export IRAFARCH=macos64
+export iraf = $(BUILDDIR)/iraf/
+
+ifeq ($(MACARCH), arm64)
+  export IRAFARCH = macos64
+  MINVERSION = 11
+  PKGBUILD_ARG = --min-os-version $(MINVERSION)
+else ifeq ($(MACARCH), x86_64)
+  export IRAFARCH = macintel
+  MINVERSION = 10.10
+  PKGBUILD_ARG = --min-os-version $(MINVERSION)
+else # i386
+  export IRAFARCH = macosx
+  MINVERSION = 10.6
+  PKGBUILD_ARG =
 endif
+
 export MKPKG=$(iraf)unix/bin/mkpkg.e
 export RMFILES=$(iraf)unix/bin/rmfiles.e
 
@@ -48,7 +57,7 @@ core.pkg:
 	pkgbuild --identifier community.iraf.core \
 	         --root $(INSTDIR)/iraf \
 		 --install-location / \
-		 --min-os-version $(MINVERSION) \
+		 $(PGKBUILD_ARG) \
 		 --version 2.17.1 \
 	         $@
 
@@ -70,7 +79,7 @@ x11iraf.pkg: core.pkg
 	pkgbuild --identifier community.iraf.x11iraf \
 	         --root $(INSTDIR)/x11 \
 	         --install-location / \
-		 --min-os-version $(MINVERSION) \
+		 $(PGKBUILD_ARG) \
 		 --version 2.1+ \
 	         $@
 
@@ -89,7 +98,7 @@ ctio.pkg: core.pkg
 	pkgbuild --identifier community.iraf.ctio \
 	         --root $(BUILDDIR)/ctio \
 	         --install-location /usr/local/lib/iraf/extern/ctio/ \
-		 --min-os-version $(MINVERSION) \
+		 $(PGKBUILD_ARG) \
 		 --version 0+2023-11-12 \
 	         $@
 
@@ -107,7 +116,7 @@ fitsutil.pkg: core.pkg
 	pkgbuild --identifier community.iraf.fitsutil \
 	         --root $(BUILDDIR)/fitsutil \
 	         --install-location /usr/local/lib/iraf/extern/fitsutil/ \
-		 --min-os-version $(MINVERSION) \
+		 $(PGKBUILD_ARG) \
 		 --version 0+2024-02-04 \
 	         $@
 
@@ -125,7 +134,7 @@ mscred.pkg: core.pkg
 	pkgbuild --identifier community.iraf.mscred \
 	         --root $(BUILDDIR)/mscred \
 	         --install-location /usr/local/lib/iraf/extern/mscred/ \
-		 --min-os-version $(MINVERSION) \
+		 $(PGKBUILD_ARG) \
 		 --version 0+2023-12-12 \
 	         $@
 
@@ -144,7 +153,7 @@ rvsao.pkg: core.pkg
 	pkgbuild --identifier community.iraf.rvsao \
 	         --root $(BUILDDIR)/rvsao \
 	         --install-location /usr/local/lib/iraf/extern/rvsao/ \
-		 --min-os-version $(MINVERSION) \
+		 $(PGKBUILD_ARG) \
 		 --version 2.8.5 \
 	         $@
 
@@ -163,7 +172,7 @@ sptable.pkg: core.pkg
 	pkgbuild --identifier community.iraf.sptable \
 	         --root $(BUILDDIR)/sptable \
 	         --install-location /usr/local/lib/iraf/extern/sptable/ \
-		 --min-os-version $(MINVERSION) \
+		 $(PGKBUILD_ARG) \
 		 --version 1.0.pre20180612 \
 	         $@
 
@@ -182,7 +191,7 @@ st4gem.pkg: core.pkg
 	pkgbuild --identifier community.iraf.st4gem \
 	         --root $(BUILDDIR)/st4gem \
 	         --install-location /usr/local/lib/iraf/extern/st4gem/ \
-		 --min-os-version $(MINVERSION) \
+		 $(PGKBUILD_ARG) \
 		 --version 1.0 \
 	         $@
 
@@ -201,7 +210,7 @@ xdimsum.pkg: core.pkg
 	pkgbuild --identifier community.iraf.xdimsum \
 	         --root $(BUILDDIR)/xdimsum \
 	         --install-location /usr/local/lib/iraf/extern/xdimsum/ \
-		 --min-os-version $(MINVERSION) \
+		 $(PGKBUILD_ARG) \
 		 --version 0+2024-02-01 \
 	         $@
 

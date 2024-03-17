@@ -1,0 +1,20 @@
+From: Ole Streicher <olebole@debian.org>
+Date: Sat, 15 Jul 2023 19:23:18 +0200
+Subject: Create bindir and includedir on libvotable install
+
+---
+ vendor/libvotable/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/vendor/libvotable/Makefile b/vendor/libvotable/Makefile
+index f4dad42..10b050b 100644
+--- a/vendor/libvotable/Makefile
++++ b/vendor/libvotable/Makefile
+@@ -12,6 +12,7 @@ libVOTable.a: $(OBJS)
+ 	ar r $@ $?
+ 
+ install: libVOTable.a
++	mkdir -p $(bindir) $(includedir)
+ 	cp libVOTable.a $(bindir)
+ 	cp $(INCS) $(includedir)
+ 

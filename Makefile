@@ -57,7 +57,7 @@ core.pkg:
 	pkgbuild --identifier community.iraf.core \
 	         --root $(INSTDIR)/iraf \
 		 --install-location / \
-		 $(PGKBUILD_ARG) \
+		 $(PKGBUILD_ARG) \
 		 --version 2.17.1 \
 	         $@
 
@@ -79,7 +79,7 @@ x11iraf.pkg: core.pkg
 	pkgbuild --identifier community.iraf.x11iraf \
 	         --root $(INSTDIR)/x11 \
 	         --install-location / \
-		 $(PGKBUILD_ARG) \
+		 $(PKGBUILD_ARG) \
 		 --version 2.1+ \
 	         $@
 
@@ -98,7 +98,7 @@ ctio.pkg: core.pkg
 	pkgbuild --identifier community.iraf.ctio \
 	         --root $(BUILDDIR)/ctio \
 	         --install-location /usr/local/lib/iraf/extern/ctio/ \
-		 $(PGKBUILD_ARG) \
+		 $(PKGBUILD_ARG) \
 		 --version 0+2023-11-12 \
 	         $@
 
@@ -116,7 +116,7 @@ fitsutil.pkg: core.pkg
 	pkgbuild --identifier community.iraf.fitsutil \
 	         --root $(BUILDDIR)/fitsutil \
 	         --install-location /usr/local/lib/iraf/extern/fitsutil/ \
-		 $(PGKBUILD_ARG) \
+		 $(PKGBUILD_ARG) \
 		 --version 0+2024-02-04 \
 	         $@
 
@@ -134,7 +134,7 @@ mscred.pkg: core.pkg
 	pkgbuild --identifier community.iraf.mscred \
 	         --root $(BUILDDIR)/mscred \
 	         --install-location /usr/local/lib/iraf/extern/mscred/ \
-		 $(PGKBUILD_ARG) \
+		 $(PKGBUILD_ARG) \
 		 --version 0+2023-12-12 \
 	         $@
 
@@ -153,7 +153,7 @@ rvsao.pkg: core.pkg
 	pkgbuild --identifier community.iraf.rvsao \
 	         --root $(BUILDDIR)/rvsao \
 	         --install-location /usr/local/lib/iraf/extern/rvsao/ \
-		 $(PGKBUILD_ARG) \
+		 $(PKGBUILD_ARG) \
 		 --version 2.8.5 \
 	         $@
 
@@ -172,7 +172,7 @@ sptable.pkg: core.pkg
 	pkgbuild --identifier community.iraf.sptable \
 	         --root $(BUILDDIR)/sptable \
 	         --install-location /usr/local/lib/iraf/extern/sptable/ \
-		 $(PGKBUILD_ARG) \
+		 $(PKGBUILD_ARG) \
 		 --version 1.0.pre20180612 \
 	         $@
 
@@ -191,7 +191,7 @@ st4gem.pkg: core.pkg
 	pkgbuild --identifier community.iraf.st4gem \
 	         --root $(BUILDDIR)/st4gem \
 	         --install-location /usr/local/lib/iraf/extern/st4gem/ \
-		 $(PGKBUILD_ARG) \
+		 $(PKGBUILD_ARG) \
 		 --version 1.0 \
 	         $@
 
@@ -210,7 +210,7 @@ xdimsum.pkg: core.pkg
 	pkgbuild --identifier community.iraf.xdimsum \
 	         --root $(BUILDDIR)/xdimsum \
 	         --install-location /usr/local/lib/iraf/extern/xdimsum/ \
-		 $(PGKBUILD_ARG) \
+		 $(PKGBUILD_ARG) \
 		 --version 0+2024-02-01 \
 	         $@
 

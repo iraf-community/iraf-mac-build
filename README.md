@@ -1,22 +1,36 @@
-## Source for the IRAF package build for macOS
+[![IRAF macOS build](https://github.com/iraf-community/iraf-mac-build/actions/workflows/build.yml/badge.svg)](https://github.com/iraf-community/iraf-mac-build/actions/workflows/build.yml)
+[![IRAF@mac release](https://img.shields.io/github/release/iraf-community/iraf-mac-build.svg)](https://github.com/iraf-community/iraf-mac-build/releases/latest)
 
-The package can be downloaded as separate packages for Intel and ARM
-Macs from the [Releases
-page](https://github.com/iraf-community/iraf-mac-build/releases). It combines
-the IRAF core package, x11iraf and a selection of common external
-packages.
+## IRAF package build for macOS
 
-The packages are not signed and therefore may cause a security error
-when downloaded. This can be avoided by right-clicking and then
-selecting "Open" instead of double-clicking, or by removing the
-quarantine attribute:
+### Want to install IRAF on macOS?
 
-    % xattr -d com.apple.quarantine iraf-arm64.pkg
+Check out the [IRAF installation on
+macOS](https://iraf-community.github.io/install.html#macos) web page.
 
-Alternatively, the file can be downloaded in the command line, f.e. with
 
-    % curl -OL https://github.com/iraf-community/iraf-mac-build/releases/download/v2.17.1-1a1/iraf-arm64.pkg
+### Software versions
 
-Please keep in mind that this is an early pre-release and based on the
-development versions of the software packages. See the release notes
-for more information of the versions included.
+* IRAF [2.17.1](https://github.com/iraf-community/iraf/releases/tag/v2.17.1),
+* X11IRAF [2.1](https://github.com/iraf-community/x11iraf/releases/tag/v2.1),
+* ctio [a6113fe](https://github.com/iraf-community/iraf-ctio/tree/a6113fe), 2023-11-12
+* fitsutil [0858bbb](https://github.com/iraf-community/iraf-fitsutil/tree/0858bbb), 2024-03-12
+* mscred [8c160e5](https://github.com/iraf-community/iraf-mscred/tree/8c160e5), 2023-12-12
+* rvsao [2.8.5](http://tdc-www.harvard.edu/iraf/rvsao/rvsao-2.8.5.tar.gz)
+* sptable [1.0.pre20180612](https://github.com/iraf-community/iraf-sptable/releases/tag/1.0.pre20180612)
+* st4gem [1.0](https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/releases/1.0)
+* xdimsum [6dfc2de](https://github.com/iraf-community/iraf-xdimsum/tree/6dfc2de), 2024-01-01
+
+
+### Build installer from source
+
+* install XCode tools (`xcode-select --install`)
+
+* install [XQuartz](https://www.xquartz.org/)
+
+* run 
+   - `make` to build the host arch, 
+   - `make MACARCH=x86_64` to build Intel/64bit installer on Apple Silicon
+   - `make MACARCH=i386` to build Intel/32 bit on Intel (<= OS X 10.14)
+   
+* the executables are ad-hoc signed, the package is unsigned

@@ -1,3 +1,6 @@
+[![IRAF macOS build](https://github.com/iraf-community/iraf-mac-build/actions/workflows/build.yml/badge.svg)](https://github.com/iraf-community/iraf-mac-build/actions/workflows/build.yml)
+[![IRAF@mac release](https://img.shields.io/github/release/iraf-community/iraf-mac-build.svg)](https://github.com/iraf-community/iraf-mac-build/releases/latest)
+
 ## IRAF package build for macOS
 
 ### Want to install IRAF on macOS?

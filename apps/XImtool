@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+# XImtool.app start script
+
+SCRIPT_DIR=$(dirname -- "${0}")
+CONTENT_DIR=$(dirname -- "${SCRIPT_DIR}")
+RESOURCES_DIR=$(dirname -- "${SCRIPT_DIR}")/Resources
+APP_DIR=$(dirname -- "${CONTENT_DIR}")
+APP_NAME=$(echo $(basename -- "$APP_DIR") | sed 's/\.app$//')
+
+function xquartz_error() {
+    osascript <<EOT
+      set theCaption to "XQuartz required but not found"
+      set theMessage to "Please install it and re-login before running $0."
+      display alert theCaption message theMessage as critical buttons {"Quit", "XQuartz website"}
+      set response to button returned of the result
+      if response is "XQuartz website" then open location "https://xquartz.org"
+EOT
+}
+
+if [ -z "${DISPLAY}" ] ; then
+   xquartz_error "${APP_NAME}"
+   exit 1
+fi
+
+# Simple dummy X command to wait until the X server is up
+xprop -root > /dev/null
+
+cd "${HOME}"
+${RESOURCES_DIR}/bin/ximtool &

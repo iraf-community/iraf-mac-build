@@ -3,17 +3,12 @@
 #$0 = returns the path to the script
 #$1 = returns the path to the package
 #$2 = returns the target location (for example: /Applications)
-#$3 = returns the target volume (for exar example: /Volumes/Macintosh HD)
+#$3 = returns the target volume (for example: /Volumes/Macintosh HD)
 
 APP_PATH=$2
 
 # Link the binaries, the manpages, and the terminfo file
 mkdir -p /usr/local/bin/ /usr/local/share/man/man1/ /usr/local/share/terminfo/78
-
-XIMTOOL_PATH=${APP_PATH}/XImtool.app/Contents/Resources
-rm -f /usr/local/bin/ximtool /usr/local/share/man/man1/ximtool.1
-ln -s ${XIMTOOL_PATH}/bin/ximtool /usr/local/bin/
-ln -s ${XIMTOOL_PATH}/man/ximtool.1 /usr/local/share/man/man1/
 
 XGTERM_PATH=${APP_PATH}/XGTerm.app/Contents/Resources
 rm -f /usr/local/bin/xgterm /usr/local/share/man/man1/xgterm.1 /usr/local/share/terminfo/78/xgterm

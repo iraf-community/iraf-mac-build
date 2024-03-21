@@ -32,7 +32,8 @@
     </choice>
     <choice id="community.iraf.x11iraf" title="X11IRAF"
 	    description="X11 terminal emulator (xgterm) and interactive image display (ximtool)">
-      <pkg-ref id="community.iraf.x11iraf">x11iraf.pkg</pkg-ref>
+      <pkg-ref id="community.iraf.xgterm">xgterm.pkg</pkg-ref>
+      <pkg-ref id="community.iraf.ximtool">ximtool.pkg</pkg-ref>
     </choice>
     <choice id="community.iraf.ctio" title="External: ctio"
 	    description="Tools from the Cerro Tololo Inter-American Observatory"

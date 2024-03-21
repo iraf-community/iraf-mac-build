@@ -37,7 +37,7 @@ PATH += :$(BINDIR)
 
 all: iraf-$(RELEASE)-$(MACARCH).pkg
 
-PKGS = core.pkg x11iraf.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
+PKGS = core.pkg ximtool.pkg xgterm.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
        rvsao.pkg sptable.pkg st4gem.pkg xdimsum.pkg
 
 
@@ -61,48 +61,62 @@ core.pkg:
 		 --version 2.17.1 \
 	         $@
 
-x11iraf.pkg: core.pkg
+ximtool.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/x11iraf
 	curl -L https://github.com/iraf-community/x11iraf/archive/refs/tags/v2.1.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/x11iraf --strip-components=1
-	patch -d $(BUILDDIR)/x11iraf -p1 < patches/x11iraf/0001-Force-setting-of-local-terminfo-database.patch
+	patch -d $(BUILDDIR)/x11iraf -p1 < \
+	      patches/x11iraf/0001-Force-setting-of-local-terminfo-database.patch
 	$(MAKE) -C $(BUILDDIR)/x11iraf
 
-	mkdir -p $(INSTDIR)/x11/XGTerm.app/Contents/MacOS
-	mkdir -p $(INSTDIR)/x11/XGTerm.app/Contents/Resources/bin
-	mkdir -p $(INSTDIR)/x11/XGTerm.app/Contents/Resources/man
-	mkdir -p $(INSTDIR)/x11/XGTerm.app/Contents/Resources/terminfo
-	install -m755 $(BUILDDIR)/x11iraf/xgterm/xgterm \
-	        $(INSTDIR)/x11/XGTerm.app/Contents/Resources/bin
-	install -m755 apps/XGTerm $(INSTDIR)/x11/XGTerm.app/Contents/MacOS
-	install apps/xgterm.plist $(INSTDIR)/x11/XGTerm.app/Contents/Info.plist
-	iconutil --convert icns --output $(INSTDIR)/x11/XGTerm.app/Contents/Resources/XGTerm.icns apps/XGTerm.iconset/
-	install $(BUILDDIR)/x11iraf/xgterm/xgterm.man \
-	        $(INSTDIR)/x11/XGTerm.app/Contents/Resources/man/xgterm.1
-	TERMINFO=$(INSTDIR)/x11/XGTerm.app/Resources/terminfo tic \
-	        $(BUILDDIR)/x11iraf/xgterm/xgterm.terminfo
-	codesign -s - -i community.iraf.xgterm $(INSTDIR)/x11/XGTerm.app
-
-	mkdir -p $(INSTDIR)/x11/XImtool.app/Contents/MacOS
-	mkdir -p $(INSTDIR)/x11/XImtool.app/Contents/Resources/bin
-	mkdir -p $(INSTDIR)/x11/XImtool.app/Contents/Resources/man
-	install -m755 apps/XImtool $(INSTDIR)/x11/XImtool.app/Contents/MacOS
+	mkdir -p $(INSTDIR)/ximtool/XImtool.app/Contents/MacOS
+	mkdir -p $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/bin
+	mkdir -p $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/man
+	install -m755 apps/XImtool $(INSTDIR)/ximtool/XImtool.app/Contents/MacOS
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool \
-	        $(INSTDIR)/x11/XImtool.app/Contents/Resources/bin
+	        $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/bin
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/clients/ism_wcspix.e \
-	        $(INSTDIR)/x11/XImtool.app/Contents/Resources
-	install apps/ximtool.plist $(INSTDIR)/x11/XImtool.app/Contents/Info.plist
-	iconutil --convert icns --output $(INSTDIR)/x11/XImtool.app/Contents/Resources/XImtool.icns apps/XImtool.iconset/
+	        $(INSTDIR)/ximtool/XImtool.app/Contents/Resources
+	install apps/ximtool.plist $(INSTDIR)/ximtool/XImtool.app/Contents/Info.plist
+	iconutil --convert icns \
+	         --output $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/XImtool.icns \
+	         apps/XImtool.iconset/
 	install $(BUILDDIR)/x11iraf/ximtool/ximtool.man \
-	        $(INSTDIR)/x11/XImtool.app/Contents/Resources/man/ximtool.1
-	codesign -s - -i community.iraf.ximtool $(INSTDIR)/x11/XImtool.app
-	pkgbuild --identifier community.iraf.x11iraf \
-	         --root $(INSTDIR)/x11 \
+	        $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/man/ximtool.1
+	codesign -s - -i community.iraf.ximtool $(INSTDIR)/ximtool/XImtool.app
+	pkgbuild --identifier community.iraf.ximtool \
+	         --root $(INSTDIR)/ximtool \
 	         --install-location /Applications \
-	         --scripts scripts/x11/ \
+	         --scripts scripts/ximtool \
 		 $(PKGBUILD_ARG) \
 		 --version 2.1 \
-	         $@
+	         ximtool.pkg
+
+xgterm.pkg: ximtool.pkg # This re-uses the same build as ximtool
+	mkdir -p $(INSTDIR)/xgterm/XGTerm.app/Contents/MacOS
+	mkdir -p $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/bin
+	mkdir -p $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/man
+	mkdir -p $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/terminfo
+	install -m755 $(BUILDDIR)/x11iraf/xgterm/xgterm \
+	        $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/bin
+	install -m755 apps/XGTerm $(INSTDIR)/xgterm/XGTerm.app/Contents/MacOS
+	install apps/xgterm.plist $(INSTDIR)/xgterm/XGTerm.app/Contents/Info.plist
+	iconutil --convert icns \
+	         --output $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/XGTerm.icns \
+	         apps/XGTerm.iconset/
+	install $(BUILDDIR)/x11iraf/xgterm/xgterm.man \
+	        $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/man/xgterm.1
+	TERMINFO=$(INSTDIR)/xgterm/XGTerm.app/Resources/terminfo tic \
+	        $(BUILDDIR)/x11iraf/xgterm/xgterm.terminfo
+	codesign -s - -i community.iraf.xgterm $(INSTDIR)/xgterm/XGTerm.app
+	pkgbuild --identifier community.iraf.xgterm \
+	         --root $(INSTDIR)/xgterm \
+	         --install-location /Applications \
+	         --scripts scripts/xgterm \
+		 $(PKGBUILD_ARG) \
+		 --version 2.1 \
+	         xgterm.pkg
+
 
 ctio.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/ctio

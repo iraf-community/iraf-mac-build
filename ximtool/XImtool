@@ -26,5 +26,8 @@ fi
 # Simple dummy X command to wait until the X server is up
 xprop -root > /dev/null
 
+# Add local bin dir to path so that ism_wcspix.e can be found and started
+export PATH=${PATH}:${RESOURCES_DIR}/bin
+
 cd "${HOME}"
 ${RESOURCES_DIR}/bin/ximtool &

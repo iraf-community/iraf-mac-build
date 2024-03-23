@@ -76,7 +76,7 @@ ximtool.pkg: core.pkg
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool \
 	        $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/bin
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/clients/ism_wcspix.e \
-	        $(INSTDIR)/ximtool/XImtool.app/Contents/Resources
+	        $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/bin
 	install ximtool/Info.plist $(INSTDIR)/ximtool/XImtool.app/Contents/Info.plist
 	iconutil --convert icns \
 	         --output $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/XImtool.icns \

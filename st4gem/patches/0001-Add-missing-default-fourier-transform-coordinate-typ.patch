@@ -1,0 +1,46 @@
+From f10a048cdfcffc052b284eade0c1eeb26f5b36f9 Mon Sep 17 00:00:00 2001
+From: Ole Streicher <olebole@debian.org>
+Date: Sun, 24 Mar 2024 11:39:29 +0100
+Subject: [PATCH] Add missing default fourier transform coordinate-type pairs
+
+They seem to were lost when fourier was extracted from STSDAS
+
+https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/issues/7
+---
+ pkg/analysis/fourier/ftpairs.dat | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+ create mode 100644 pkg/analysis/fourier/ftpairs.dat
+
+diff --git a/pkg/analysis/fourier/ftpairs.dat b/pkg/analysis/fourier/ftpairs.dat
+new file mode 100644
+index 0000000..6dde124
+--- /dev/null
++++ b/pkg/analysis/fourier/ftpairs.dat
+@@ -0,0 +1,24 @@
++# Fourier transform coordinate-type pairs.
++# FITS standard CTYPEs are used where possible.
++
++TIME       FREQ
++
++LAMBDA     WAVENUMB
++
++VELO       FTVELO	# Velocity, spatial frequency
++
++PIXEL      PIXEL
++
++LL         UU		# E-W tangent plane, U coordinate of visibility
++MM         VV		# N-S tangent plane, V coordinate of visibility
++NN         WW		# normal (radial) "plane", W coordinate of visibility
++
++RA         FTRA		# Equatorial coords
++DEC        FTDEC
++RA---TAN   FTRA-T	# Equatorial coords
++DEC--TAN   FTDEC-T
++
++GLON       FTGLON	# Galactic coords
++GLAT       FTGLAT
++
++ANGLE      FTANGLE	# Arbitrary angular separation
+-- 
+2.43.0
+

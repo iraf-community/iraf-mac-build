@@ -215,6 +215,7 @@ st4gem.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/st4gem
 	curl -L https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/archive/1.0/st4gem-1.0.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/st4gem --strip-components=1
+	patch -d $(BUILDDIR)/st4gem -p1 < st4gem/patches/0001-Add-missing-default-fourier-transform-coordinate-typ.patch
 	( cd $(BUILDDIR)/st4gem && \
 	  rm -rf bin* && \
 	  mkdir -p bin.$(IRAFARCH) && \

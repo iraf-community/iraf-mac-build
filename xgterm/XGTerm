@@ -11,7 +11,7 @@ APP_NAME=$(echo $(basename -- "$APP_DIR") | sed 's/\.app$//')
 function xquartz_error() {
     osascript <<EOT
       set theCaption to "XQuartz required but not found"
-      set theMessage to "Please install it and re-login before running $0."
+      set theMessage to "Please install it and re-login before running $1."
       display alert theCaption message theMessage as critical buttons {"Quit", "XQuartz website"}
       set response to button returned of the result
       if response is "XQuartz website" then open location "https://xquartz.org"

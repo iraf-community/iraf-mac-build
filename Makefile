@@ -37,7 +37,7 @@ PATH += :$(BINDIR)
 
 all: iraf-$(RELEASE)-$(MACARCH).pkg
 
-PKGS = core.pkg x11iraf.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
+PKGS = core.pkg ximtool.pkg xgterm.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
        rvsao.pkg sptable.pkg st4gem.pkg xdimsum.pkg
 
 
@@ -45,8 +45,8 @@ core.pkg:
 	mkdir -p $(BUILDDIR)/iraf
 	curl -L https://github.com/iraf-community/iraf/archive/refs/tags/v2.17.1.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/iraf --strip-components=1
-	patch -d $(BUILDDIR)/iraf -p1 < patches/core/0001-fix-DESTDIR-in-Makefile.patch
-	patch -d $(BUILDDIR)/iraf -p1 < patches/core/0002-Create-bindir-and-includedir-on-libvotable-install.patch
+	patch -d $(BUILDDIR)/iraf -p1 < core/patches/0001-fix-DESTDIR-in-Makefile.patch
+	patch -d $(BUILDDIR)/iraf -p1 < core/patches/0002-Create-bindir-and-includedir-on-libvotable-install.patch
 	$(MAKE) -C $(BUILDDIR)/iraf
 	mkdir -p $(INSTDIR)/iraf
 	$(MAKE) -C $(BUILDDIR)/iraf DESTDIR=$(INSTDIR)/iraf install
@@ -61,27 +61,62 @@ core.pkg:
 		 --version 2.17.1 \
 	         $@
 
-x11iraf.pkg: core.pkg
+ximtool.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/x11iraf
 	curl -L https://github.com/iraf-community/x11iraf/archive/refs/tags/v2.1.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/x11iraf --strip-components=1
-	patch -d $(BUILDDIR)/x11iraf -p1 < patches/x11iraf/0001-Force-setting-of-local-terminfo-database.patch
+	patch -d $(BUILDDIR)/x11iraf -p1 < \
+	      xgterm/patches/0001-Force-setting-of-local-terminfo-database.patch
 	$(MAKE) -C $(BUILDDIR)/x11iraf
-	mkdir -p $(INSTDIR)/x11/usr/local/bin $(INSTDIR)/x11/usr/local/share/man/man1 $(INSTDIR)/x11/usr/local/share/terminfo
-	install -m755 $(BUILDDIR)/x11iraf/xgterm/xgterm $(INSTDIR)/x11/usr/local/bin
-	install -m755 $(BUILDDIR)/x11iraf/xgterm/xgterm.man $(INSTDIR)/x11/usr/local/share/man/man1/xgterm.1
-	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool $(INSTDIR)/x11/usr/local/bin
-	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool.man $(INSTDIR)/x11/usr/local/share/man/man1/ximtool.1
-	install -m755 $(BUILDDIR)/x11iraf/ximtool/clients/ism_wcspix.e $(INSTDIR)/x11/usr/local/bin
-	TERMINFO=$(INSTDIR)/x11/usr/local/share/terminfo tic $(BUILDDIR)/x11iraf/xgterm/xgterm.terminfo
-	find $(INSTDIR)/x11 -name \*.[eao] -type f \
-	     -exec codesign -s - -i community.iraf.x11iraf {} \;
-	pkgbuild --identifier community.iraf.x11iraf \
-	         --root $(INSTDIR)/x11 \
-	         --install-location / \
+
+	mkdir -p $(INSTDIR)/ximtool/XImtool.app/Contents/MacOS
+	mkdir -p $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/bin
+	mkdir -p $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/man
+	install -m755 ximtool/XImtool $(INSTDIR)/ximtool/XImtool.app/Contents/MacOS
+	install -m755 $(BUILDDIR)/x11iraf/ximtool/ximtool \
+	        $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/bin
+	install -m755 $(BUILDDIR)/x11iraf/ximtool/clients/ism_wcspix.e \
+	        $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/bin
+	install ximtool/Info.plist $(INSTDIR)/ximtool/XImtool.app/Contents/Info.plist
+	iconutil --convert icns \
+	         --output $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/XImtool.icns \
+	         ximtool/XImtool.iconset/
+	install $(BUILDDIR)/x11iraf/ximtool/ximtool.man \
+	        $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/man/ximtool.1
+	codesign -s - -i community.iraf.ximtool $(INSTDIR)/ximtool/XImtool.app
+	pkgbuild --identifier community.iraf.ximtool \
+	         --root $(INSTDIR)/ximtool \
+	         --install-location /Applications \
+	         --scripts ximtool/scripts \
 		 $(PKGBUILD_ARG) \
-		 --version 2.1+ \
-	         $@
+		 --version 2.1 \
+	         ximtool.pkg
+
+xgterm.pkg: ximtool.pkg # This re-uses the same build as ximtool
+	mkdir -p $(INSTDIR)/xgterm/XGTerm.app/Contents/MacOS
+	mkdir -p $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/bin
+	mkdir -p $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/man
+	mkdir -p $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/terminfo
+	install -m755 $(BUILDDIR)/x11iraf/xgterm/xgterm \
+	        $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/bin
+	install -m755 xgterm/XGTerm $(INSTDIR)/xgterm/XGTerm.app/Contents/MacOS
+	install xgterm/Info.plist $(INSTDIR)/xgterm/XGTerm.app/Contents/Info.plist
+	iconutil --convert icns \
+	         --output $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/XGTerm.icns \
+	         xgterm/XGTerm.iconset/
+	install $(BUILDDIR)/x11iraf/xgterm/xgterm.man \
+	        $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/man/xgterm.1
+	TERMINFO=$(INSTDIR)/xgterm/XGTerm.app/Resources/terminfo tic \
+	        $(BUILDDIR)/x11iraf/xgterm/xgterm.terminfo
+	codesign -s - -i community.iraf.xgterm $(INSTDIR)/xgterm/XGTerm.app
+	pkgbuild --identifier community.iraf.xgterm \
+	         --root $(INSTDIR)/xgterm \
+	         --install-location /Applications \
+	         --scripts xgterm/scripts \
+		 $(PKGBUILD_ARG) \
+		 --version 2.1 \
+	         xgterm.pkg
+
 
 ctio.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/ctio
@@ -142,7 +177,7 @@ rvsao.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/rvsao
 	curl -L http://tdc-www.harvard.edu/iraf/rvsao/rvsao-2.8.5.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/rvsao --strip-components=1
-	patch -d $(BUILDDIR)/rvsao -p1 < patches/rvsao/0001-Add-NOAO-into-build-search-path.patch
+	patch -d $(BUILDDIR)/rvsao -p1 < rvsao/patches/0001-Add-NOAO-into-build-search-path.patch
 	( cd $(BUILDDIR)/rvsao && \
 	  rm -rf bin* && \
 	  mkdir -p bin.$(IRAFARCH) && \
@@ -217,8 +252,8 @@ xdimsum.pkg: core.pkg
 distribution-$(MACARCH).plist: distribution.plist
 	sed "s/@@MACARCH@@/$(MACARCH)/g;s/@@RELEASE@@/$(RELEASE)/g;s/@@MINVERSION@@/$(MINVERSION)/g" $< > $@
 
-iraf-$(RELEASE)-$(MACARCH).pkg: $(PKGS) distribution-$(MACARCH).plist conclusion.html welcome.html logo.png
-	productbuild --distribution distribution-$(MACARCH).plist --resources . $@
+iraf-$(RELEASE)-$(MACARCH).pkg: $(PKGS) distribution-$(MACARCH).plist
+	productbuild --distribution distribution-$(MACARCH).plist --resources resources $@
 
 clean:
 	rm -rf $(PKGS) iraf-$(RELEASE)-$(MACARCH).pkg distribution-$(MACARCH).plist bin $(INSTDIR) $(BUILDDIR)

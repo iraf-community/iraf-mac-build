@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        <key>LSApplicationCategoryType</key>
+        <string>public.app-category.education</string>
+        <key>CFBundleIdentifier</key>
+        <string>community.iraf.ximtool</string>
+        <key>CFBundleName</key>
+        <string>XImtool</string>
+        <key>CFBundleDisplayName</key>
+        <string>XImtool</string>
+        <key>CFBundleVersion</key>
+        <string>2.1</string>
+        <key>CFBundleShortVersionString</key>
+        <string>2.1</string>
+        <key>NSHumanReadableCopyright</key>
+        <string>1986-2014 Association of Universities for Research in Astronomy Inc.</string>
+        <key>LSMinimumSystemVersion</key>
+        <string>10.10</string>
+        <key>CFBundleIconFile</key>
+        <string>XImtool.icns</string>
+        <key>CFBundleExecutable</key>
+        <string>XImtool</string>
+        <key>LSEnvironment</key>
+        <dict>
+            <key>LC_CTYPE</key>
+            <string>UTF-8</string>
+        </dict>
+    </dict>
+</plist>
+

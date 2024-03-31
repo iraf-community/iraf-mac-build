@@ -41,7 +41,7 @@ PKGS = core.pkg ximtool.pkg xgterm.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
 
 core.pkg:
 	mkdir -p $(BUILDDIR)/iraf
-	curl -L https://github.com/iraf-community/iraf/archive/refs/tags/v2.17.1.tar.gz | \
+	curl -L https://github.com/iraf-community/iraf/archive/refs/tags/v2.18.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/iraf --strip-components=1
 	patch -d $(BUILDDIR)/iraf -p1 < core/patches/0001-fix-DESTDIR-in-Makefile.patch
 	patch -d $(BUILDDIR)/iraf -p1 < core/patches/0002-Create-bindir-and-includedir-on-libvotable-install.patch
@@ -57,7 +57,7 @@ core.pkg:
 	         --root $(INSTDIR)/iraf \
 		 --install-location / \
 		 $(PKGBUILD_ARG) \
-		 --version 2.17.1 \
+		 --version 2.18 \
 	         $@
 
 ximtool.pkg: core.pkg

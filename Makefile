@@ -45,6 +45,7 @@ core.pkg:
 	  tar xzf - -C $(BUILDDIR)/iraf --strip-components=1
 	patch -d $(BUILDDIR)/iraf -p1 < core/patches/0001-fix-DESTDIR-in-Makefile.patch
 	patch -d $(BUILDDIR)/iraf -p1 < core/patches/0002-Create-bindir-and-includedir-on-libvotable-install.patch
+	patch -d $(BUILDDIR)/iraf -p1 < core/patches/0003-Allow-empty-IRAFARCH-in-irafpath.patch
 	$(MAKE) -C $(BUILDDIR)/iraf
 	mkdir -p $(INSTDIR)/iraf
 	$(MAKE) -C $(BUILDDIR)/iraf DESTDIR=$(INSTDIR)/iraf install 

@@ -10,17 +10,15 @@ BINDIR = $(shell pwd)/bin
 MACARCH = $(shell uname -m)
 
 export iraf = $(BUILDDIR)/iraf/
+export IRAFARCH=
 
 ifeq ($(MACARCH), arm64)
-  export IRAFARCH = macos64
   MINVERSION = 11
   PKGBUILD_ARG = --min-os-version $(MINVERSION)
 else ifeq ($(MACARCH), x86_64)
-  export IRAFARCH = macintel
   MINVERSION = 10.10
   PKGBUILD_ARG = --min-os-version $(MINVERSION)
 else # i386
-  export IRAFARCH = macosx
   MINVERSION = 10.6
   PKGBUILD_ARG =
 endif
@@ -49,7 +47,7 @@ core.pkg:
 	patch -d $(BUILDDIR)/iraf -p1 < core/patches/0002-Create-bindir-and-includedir-on-libvotable-install.patch
 	$(MAKE) -C $(BUILDDIR)/iraf
 	mkdir -p $(INSTDIR)/iraf
-	$(MAKE) -C $(BUILDDIR)/iraf DESTDIR=$(INSTDIR)/iraf install
+	$(MAKE) -C $(BUILDDIR)/iraf DESTDIR=$(INSTDIR)/iraf install 
 	find $(INSTDIR)/iraf -name \*.[eao] -type f \
 	     -exec codesign -s - -i community.iraf.core {} \;
 	mkdir -p bin
@@ -124,8 +122,7 @@ ctio.pkg: core.pkg
 	  tar xzf - -C $(BUILDDIR)/ctio --strip-components=1
 	( cd $(BUILDDIR)/ctio && \
 	  rm -rf bin* && \
-	  mkdir -p bin.$(IRAFARCH) && \
-	  ln -s bin.$(IRAFARCH) bin && \
+	  mkdir -p bin && \
 	  ctio=$(BUILDDIR)/ctio/ $(MKPKG) -p ctio && \
 	  $(RMFILES) -f lib/strip.ctio )
 	find $(BUILDDIR)/ctio -name \*.[eao] -type f \
@@ -143,8 +140,7 @@ fitsutil.pkg: core.pkg
 	  tar xzf - -C $(BUILDDIR)/fitsutil --strip-components=1
 	( cd $(BUILDDIR)/fitsutil && \
 	  rm -rf bin* && \
-	  mkdir -p bin.$(IRAFARCH) && \
-	  ln -s bin.$(IRAFARCH) bin && \
+	  mkdir -p bin && \
 	  fitsutil=$(BUILDDIR)/fitsutil/ $(MKPKG) -p fitsutil )
 	find $(BUILDDIR)/fitsutil -name \*.[eao] -type f \
 	     -exec codesign -s - -i community.iraf.fitsutil {} \;
@@ -161,8 +157,7 @@ mscred.pkg: core.pkg
 	  tar xzf - -C $(BUILDDIR)/mscred --strip-components=1
 	( cd $(BUILDDIR)/mscred && \
 	  rm -rf bin* && \
-	  mkdir -p bin.$(IRAFARCH) && \
-	  ln -s bin.$(IRAFARCH) bin && \
+	  mkdir -p bin && \
 	  mscred=$(BUILDDIR)/mscred/ $(MKPKG) -p mscred)
 	find $(BUILDDIR)/mscred -name \*.[eao] -type f \
 	     -exec codesign -s - -i community.iraf.mscred {} \;
@@ -180,8 +175,7 @@ rvsao.pkg: core.pkg
 	patch -d $(BUILDDIR)/rvsao -p1 < rvsao/patches/0001-Add-NOAO-into-build-search-path.patch
 	( cd $(BUILDDIR)/rvsao && \
 	  rm -rf bin* && \
-	  mkdir -p bin.$(IRAFARCH) && \
-	  ln -s bin.$(IRAFARCH) bin && \
+	  mkdir -p bin && \
 	  rvsao=$(BUILDDIR)/rvsao/ $(MKPKG) -p rvsao)
 	find $(BUILDDIR)/rvsao -name \*.[eao] -type f \
 	     -exec codesign -s - -i community.iraf.rvsao {} \;
@@ -198,8 +192,7 @@ sptable.pkg: core.pkg
 	  tar xzf - -C $(BUILDDIR)/sptable --strip-components=1
 	( cd $(BUILDDIR)/sptable && \
 	  rm -rf bin* && \
-	  mkdir -p bin.$(IRAFARCH) && \
-	  ln -s bin.$(IRAFARCH) bin && \
+	  mkdir -p bin && \
 	  sptable=$(BUILDDIR)/sptable/ $(MKPKG) -p sptable && \
 	  $(RMFILES) -f lib/strip.sptable )
 	find $(BUILDDIR)/sptable -name \*.[eao] -type f \
@@ -218,8 +211,7 @@ st4gem.pkg: core.pkg
 	patch -d $(BUILDDIR)/st4gem -p1 < st4gem/patches/0001-Add-missing-default-fourier-transform-coordinate-typ.patch
 	( cd $(BUILDDIR)/st4gem && \
 	  rm -rf bin* && \
-	  mkdir -p bin.$(IRAFARCH) && \
-	  ln -s bin.$(IRAFARCH) bin && \
+	  mkdir -p bin && \
 	  st4gem=$(BUILDDIR)/st4gem/ $(MKPKG) -p st4gem && \
 	  $(RMFILES) -f lib/strip.st4gem )
 	find $(BUILDDIR)/st4gem -name \*.[eao] -type f \
@@ -237,8 +229,7 @@ xdimsum.pkg: core.pkg
 	  tar xzf - -C $(BUILDDIR)/xdimsum --strip-components=1
 	( cd $(BUILDDIR)/xdimsum && \
 	  rm -rf bin* && \
-	  mkdir -p bin.$(IRAFARCH) && \
-	  ln -s bin.$(IRAFARCH) bin && \
+	  mkdir -p bin && \
 	  xdimsum=$(BUILDDIR)/xdimsum/ $(MKPKG) -p xdimsum && \
 	  $(RMFILES) -f lib/strip.xdimsum )
 	find $(BUILDDIR)/xdimsum -name \*.[eao] -type f \

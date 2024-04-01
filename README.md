@@ -25,12 +25,9 @@ macOS](https://iraf-community.github.io/install.html#macos) web page.
 ### Build installer from source
 
 * install XCode tools (`xcode-select --install`)
-
 * install [XQuartz](https://www.xquartz.org/)
-
 * run 
    - `make` to build the host arch, 
    - `make MACARCH=x86_64` to build Intel/64bit installer on Apple Silicon
    - `make MACARCH=i386` to build Intel/32 bit on Intel (<= OS X 10.14)
-   
 * the executables are ad-hoc signed, the package is unsigned

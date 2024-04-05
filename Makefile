@@ -28,8 +28,8 @@ export RMFILES=$(iraf)unix/bin/rmfiles.e
 
 export CFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) -O2
 export LDFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) -O2
-export XC_CFLAGS = $(CFLAGS) -I$(iraf)include
-export XC_LFLAGS = $(LDFLAGS)
+export XC_CFLAGS = $(CFLAGS) -I$(BUILDDIR)/cfitsio
+export XC_LFLAGS = $(LDFLAGS) -L$(BUILDDIR)/cfitsio
 
 PATH += :$(BINDIR)
 
@@ -41,11 +41,8 @@ PKGS = core.pkg ximtool.pkg xgterm.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
 
 core.pkg:
 	mkdir -p $(BUILDDIR)/iraf
-	curl -L https://github.com/iraf-community/iraf/archive/refs/tags/v2.17.1.tar.gz | \
+	curl -L https://github.com/iraf-community/iraf/archive/refs/tags/v2.18.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/iraf --strip-components=1
-	patch -d $(BUILDDIR)/iraf -p1 < core/patches/0001-fix-DESTDIR-in-Makefile.patch
-	patch -d $(BUILDDIR)/iraf -p1 < core/patches/0002-Create-bindir-and-includedir-on-libvotable-install.patch
-	patch -d $(BUILDDIR)/iraf -p1 < core/patches/0003-Allow-empty-IRAFARCH-in-irafpath.patch
 	$(MAKE) -C $(BUILDDIR)/iraf
 	mkdir -p $(INSTDIR)/iraf
 	$(MAKE) -C $(BUILDDIR)/iraf DESTDIR=$(INSTDIR)/iraf install 
@@ -57,7 +54,7 @@ core.pkg:
 	         --root $(INSTDIR)/iraf \
 		 --install-location / \
 		 $(PKGBUILD_ARG) \
-		 --version 2.17.1 \
+		 --version 2.18 \
 	         $@
 
 ximtool.pkg: core.pkg
@@ -135,7 +132,15 @@ ctio.pkg: core.pkg
 		 --version 0+2023-11-12 \
 	         $@
 
-fitsutil.pkg: core.pkg
+# libcfitsio.a is required for fitsutil
+$(BUILDDIR)/cfitsio/libcfitsio.a:
+	mkdir -p $(BUILDDIR)/cfitsio
+	curl -L https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio-4.4.0.tar.gz | \
+	  tar xzf - -C $(BUILDDIR)/cfitsio --strip-components=1
+	cd $(BUILDDIR)/cfitsio && ./configure --disable-curl
+	$(MAKE) -C $(BUILDDIR)/cfitsio libcfitsio.a
+
+fitsutil.pkg: core.pkg $(BUILDDIR)/cfitsio/libcfitsio.a
 	mkdir -p $(BUILDDIR)/fitsutil
 	curl -L https://github.com/iraf-community/iraf-fitsutil/archive/0858bbb.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/fitsutil --strip-components=1

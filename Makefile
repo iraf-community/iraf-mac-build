@@ -102,7 +102,7 @@ xgterm.pkg: ximtool.pkg # This re-uses the same build as ximtool
 	         xgterm/XGTerm.iconset/
 	install $(BUILDDIR)/x11iraf/xgterm/xgterm.man \
 	        $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/man/xgterm.1
-	TERMINFO=$(INSTDIR)/xgterm/XGTerm.app/Resources/terminfo tic \
+	tic -v -o $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/terminfo \
 	        $(BUILDDIR)/x11iraf/xgterm/xgterm.terminfo
 	codesign -s - -i community.iraf.xgterm $(INSTDIR)/xgterm/XGTerm.app
 	pkgbuild --identifier community.iraf.xgterm \

@@ -11,7 +11,6 @@ APP_PATH=$2
 mkdir -p /usr/local/bin/ /usr/local/share/man/man1/ /usr/local/share/terminfo/78
 
 XGTERM_PATH=${APP_PATH}/XGTerm.app/Contents/Resources
-rm -f /usr/local/bin/xgterm /usr/local/share/man/man1/xgterm.1 /usr/local/share/terminfo/78/xgterm
-ln -s ${XGTERM_PATH}/bin/xgterm /usr/local/bin/
-ln -s ${XGTERM_PATH}/man/xgterm.1 /usr/local/share/man/man1/
-ln -s ${XGTERM_PATH}/terminfo/78/xgterm /usr/local/share/terminfo/78/
+ln -sf ${XGTERM_PATH}/bin/xgterm /usr/local/bin/
+ln -sf ${XGTERM_PATH}/man/xgterm.1 /usr/local/share/man/man1/
+ln -sf ${XGTERM_PATH}/terminfo/78/xgterm /usr/local/share/terminfo/78/

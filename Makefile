@@ -142,7 +142,7 @@ $(BUILDDIR)/cfitsio/libcfitsio.a:
 
 fitsutil.pkg: core.pkg $(BUILDDIR)/cfitsio/libcfitsio.a
 	mkdir -p $(BUILDDIR)/fitsutil
-	curl -L https://github.com/iraf-community/iraf-fitsutil/archive/0858bbb.tar.gz | \
+	curl -L https://github.com/iraf-community/iraf-fitsutil/archive/refs/tags/v2024.07.06.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/fitsutil --strip-components=1
 	( cd $(BUILDDIR)/fitsutil && \
 	  rm -rf bin* && \

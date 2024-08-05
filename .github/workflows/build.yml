@@ -42,6 +42,8 @@ jobs:
           cp iraf-*.pkg /tmp
           sudo installer -pkg /tmp/iraf-*.pkg -target / -verbose
           /usr/local/lib/iraf/test/run_tests /usr/local/lib/iraf/test/noao.astutil.md
+          pip install pyraf # Test whether PyRAF runs
+          pyraf -c bench
 
       - name: Copy file via ssh
         env:

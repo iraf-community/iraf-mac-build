@@ -74,9 +74,18 @@ ximtool.pkg: core.pkg
 	install -m755 $(BUILDDIR)/x11iraf/ximtool/clients/ism_wcspix.e \
 	        $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/bin
 	install ximtool/Info.plist $(INSTDIR)/ximtool/XImtool.app/Contents/Info.plist
+	mkdir $(BUILDDIR)/x11iraf/ximtool/XImtool.iconset
+	for sz in 16 32 64 128 256 512 1024; do \
+	    magick $(BUILDDIR)/x11iraf/ximtool/XImtool.xcf -background transparent -flatten \
+	      -bordercolor transparent -border 5% -scale $${sz}x$${sz} \
+	      $(BUILDDIR)/x11iraf/ximtool/XImtool.iconset/icon_$${sz}x$${sz}.png ; \
+	    sz2=$$(expr $${sz} / 2) \
+	    cp $(BUILDDIR)/x11iraf/ximtool/XImtool.iconset/icon_$${sz}x$${sz}.png \
+	       $(BUILDDIR)/x11iraf/ximtool/XImtool.iconset/icon_$${sz2}x$${sz2}@2x.png ; \
+	done
 	iconutil --convert icns \
 	         --output $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/XImtool.icns \
-	         ximtool/XImtool.iconset/
+	         $(BUILDDIR)/x11iraf/ximtool/XImtool.iconset/
 	install $(BUILDDIR)/x11iraf/ximtool/ximtool.man \
 	        $(INSTDIR)/ximtool/XImtool.app/Contents/Resources/man/ximtool.1
 	codesign -s - -i community.iraf.ximtool $(INSTDIR)/ximtool/XImtool.app
@@ -97,9 +106,18 @@ xgterm.pkg: ximtool.pkg # This re-uses the same build as ximtool
 	        $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/bin
 	install -m755 xgterm/XGTerm $(INSTDIR)/xgterm/XGTerm.app/Contents/MacOS
 	install xgterm/Info.plist $(INSTDIR)/xgterm/XGTerm.app/Contents/Info.plist
+	mkdir $(BUILDDIR)/x11iraf/xgterm/XGTerm.iconset
+	for sz in 16 32 64 128 256 512 1024; do \
+	    magick $(BUILDDIR)/x11iraf/xgterm/XGTerm.xcf -background transparent -flatten \
+	      -bordercolor transparent -border 5% -scale $${sz}x$${sz} \
+	      $(BUILDDIR)/x11iraf/xgterm/XGTerm.iconset/icon_$${sz}x$${sz}.png ; \
+	    sz2=$$(expr $${sz} / 2) ; \
+	    cp $(BUILDDIR)/x11iraf/xgterm/XGTerm.iconset/icon_$${sz}x$${sz}.png \
+	       $(BUILDDIR)/x11iraf/xgterm/XGTerm.iconset/icon_$${sz2}x$${sz2}@2x.png ; \
+	done
 	iconutil --convert icns \
 	         --output $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/XGTerm.icns \
-	         xgterm/XGTerm.iconset/
+	         $(BUILDDIR)/x11iraf/xgterm/XGTerm.iconset/
 	install $(BUILDDIR)/x11iraf/xgterm/xgterm.man \
 	        $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/man/xgterm.1
 	tic -v -o $(INSTDIR)/xgterm/XGTerm.app/Contents/Resources/terminfo \

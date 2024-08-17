@@ -26,6 +26,7 @@ macOS](https://iraf-community.github.io/install.html#macos) web page.
 
 * install XCode tools (`xcode-select --install`)
 * install [XQuartz](https://www.xquartz.org/)
+* install ImageMagick from Brew (`brew install imagemagick`)
 * run 
    - `make` to build the host arch, 
    - `make MACARCH=x86_64` to build Intel/64bit installer on Apple Silicon

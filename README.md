@@ -11,7 +11,7 @@ macOS](https://iraf-community.github.io/install.html#macos) web page.
 
 ### Software versions
 
-* IRAF [2.18](https://github.com/iraf-community/iraf/releases/tag/v2.18),
+* IRAF [2.18.1rc1](https://github.com/iraf-community/iraf/releases/tag/v2.18.1rc1),
 * X11IRAF [2.2rc1](https://github.com/iraf-community/x11iraf/releases/tag/v2.2rc1),
 * ctio [a6113fe](https://github.com/iraf-community/iraf-ctio/tree/a6113fe), 2023-11-12
 * fitsutil [v2024.07.06](https://github.com/iraf-community/iraf-fitsutil/releases/tag/v2024.07.06),

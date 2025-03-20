@@ -15,19 +15,22 @@ export IRAFARCH=
 ifeq ($(MACARCH), arm64)
   MINVERSION = 11
   PKGBUILD_ARG = --min-os-version $(MINVERSION)
+  OPT = -O2
 else ifeq ($(MACARCH), x86_64)
   MINVERSION = 10.10
   PKGBUILD_ARG = --min-os-version $(MINVERSION)
+  OPT = -O1
 else # i386
   MINVERSION = 10.6
   PKGBUILD_ARG =
+  OBT = -O2
 endif
 
 export MKPKG=$(iraf)unix/bin/mkpkg.e
 export RMFILES=$(iraf)unix/bin/rmfiles.e
 
-export CFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) -O2
-export LDFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) -O2
+export CFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) $(OPT)
+export LDFLAGS = -mmacosx-version-min=$(MINVERSION) -arch $(MACARCH) $(OPT)
 export XC_CFLAGS = $(CFLAGS) -I$(BUILDDIR)/cfitsio
 export XC_LFLAGS = $(LDFLAGS) -L$(BUILDDIR)/cfitsio/.libs
 

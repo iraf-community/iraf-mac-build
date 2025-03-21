@@ -11,11 +11,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: macOS 12 (Intel)
-            os: macos-12
+          - name: arm64
+            os: macos-latest
+            arch: arm64
 
-          - name: macOS 15 (M1)
-            os: macos-15
+          - name: x86_64
+            os: macos-latest
+            arch: x86_64
 
     env:
       TERM: ansi
@@ -39,7 +41,7 @@ jobs:
           
       - name: Build package
         run: |
-           make -j 4
+           make -j 4 MACARCH=${{ matrix.arch }}
 
       - name: Locally test package installation
         run: |

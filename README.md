@@ -11,10 +11,10 @@ macOS](https://iraf-community.github.io/install.html#macos) web page.
 
 ### Software versions
 
-* IRAF [2.18](https://github.com/iraf-community/iraf/releases/tag/v2.18),
-* X11IRAF [2.1](https://github.com/iraf-community/x11iraf/releases/tag/v2.1),
+* IRAF [2.18.1rc1](https://github.com/iraf-community/iraf/releases/tag/v2.18.1rc1),
+* X11IRAF [2.2rc1](https://github.com/iraf-community/x11iraf/releases/tag/v2.2rc1),
 * ctio [a6113fe](https://github.com/iraf-community/iraf-ctio/tree/a6113fe), 2023-11-12
-* fitsutil [0858bbb](https://github.com/iraf-community/iraf-fitsutil/tree/0858bbb), 2024-03-12
+* fitsutil [v2024.07.06](https://github.com/iraf-community/iraf-fitsutil/releases/tag/v2024.07.06),
 * mscred [8c160e5](https://github.com/iraf-community/iraf-mscred/tree/8c160e5), 2023-12-12
 * rvsao [2.8.5](http://tdc-www.harvard.edu/iraf/rvsao/rvsao-2.8.5.tar.gz)
 * sptable [1.0.pre20180612](https://github.com/iraf-community/iraf-sptable/releases/tag/1.0.pre20180612)
@@ -26,6 +26,7 @@ macOS](https://iraf-community.github.io/install.html#macos) web page.
 
 * install XCode tools (`xcode-select --install`)
 * install [XQuartz](https://www.xquartz.org/)
+* install ImageMagick from Brew (`brew install imagemagick`)
 * run 
    - `make` to build the host arch, 
    - `make MACARCH=x86_64` to build Intel/64bit installer on Apple Silicon

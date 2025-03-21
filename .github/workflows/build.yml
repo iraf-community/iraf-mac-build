@@ -14,8 +14,8 @@ jobs:
           - name: macOS 12 (Intel)
             os: macos-12
 
-          - name: macOS 14 (M1)
-            os: macos-14
+          - name: macOS 15 (M1)
+            os: macos-15
 
     env:
       TERM: ansi
@@ -33,6 +33,10 @@ jobs:
           sudo installer -package /Volumes/XQuartz-2.8.1/XQuartz.pkg -target /
           sudo rm -f /usr/local/include/tcl.h
 
+      - name: Setup required build tools from brew (ImageMagic for the moment)
+        run: |
+          brew install imagemagick
+          
       - name: Build package
         run: |
            make -j 4

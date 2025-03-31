@@ -44,7 +44,7 @@ PKGS = core.pkg ximtool.pkg xgterm.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
 
 core.pkg:
 	mkdir -p $(BUILDDIR)/iraf
-	curl -L https://github.com/iraf-community/iraf/archive/refs/tags/v2.18.1rc1.tar.gz | \
+	curl -L https://github.com/iraf-community/iraf/archive/refs/tags/v2.18.1rc2.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/iraf --strip-components=1
 	$(MAKE) -C $(BUILDDIR)/iraf
 	mkdir -p $(INSTDIR)/iraf
@@ -57,7 +57,7 @@ core.pkg:
 	         --root $(INSTDIR)/iraf \
 		 --install-location / \
 		 $(PKGBUILD_ARG) \
-		 --version 2.18.1rc1 \
+		 --version 2.18.1rc2 \
 	         $@
 
 ximtool.pkg: core.pkg

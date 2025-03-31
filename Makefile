@@ -62,7 +62,7 @@ core.pkg:
 
 ximtool.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/x11iraf
-	curl -L https://github.com/iraf-community/x11iraf/archive/refs/tags/v2.2rc1.tar.gz | \
+	curl -L https://github.com/iraf-community/x11iraf/archive/refs/tags/v2.2.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/x11iraf --strip-components=1
 	patch -d $(BUILDDIR)/x11iraf -p1 < \
 	      xgterm/patches/0001-Force-setting-of-local-terminfo-database.patch
@@ -97,7 +97,7 @@ ximtool.pkg: core.pkg
 	         --install-location /Applications \
 	         --scripts ximtool/scripts \
 		 $(PKGBUILD_ARG) \
-		 --version 2.2rc1 \
+		 --version 2.2 \
 	         ximtool.pkg
 
 xgterm.pkg: ximtool.pkg # This re-uses the same build as ximtool
@@ -131,7 +131,7 @@ xgterm.pkg: ximtool.pkg # This re-uses the same build as ximtool
 	         --install-location /Applications \
 	         --scripts xgterm/scripts \
 		 $(PKGBUILD_ARG) \
-		 --version 2.2rc1 \
+		 --version 2.2 \
 	         xgterm.pkg
 
 

@@ -46,6 +46,8 @@ core.pkg:
 	mkdir -p $(BUILDDIR)/iraf
 	curl -L https://github.com/iraf-community/iraf/archive/refs/tags/v2.18.1rc2.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/iraf --strip-components=1
+	patch -d $(BUILDDIR)/iraf -p1 < \
+	      iraf/patches/0001-Fix-type-of-jumpcon-in-e-cl-main.c.patch
 	$(MAKE) -C $(BUILDDIR)/iraf
 	mkdir -p $(INSTDIR)/iraf
 	$(MAKE) -C $(BUILDDIR)/iraf DESTDIR=$(INSTDIR)/iraf install 

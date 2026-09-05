@@ -233,7 +233,7 @@ sptable.pkg: core.pkg
 
 st4gem.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/st4gem
-	curl -L https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/archive/1.0/st4gem-1.0.tar.gz | \
+	curl -L https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/archive/v1.2.1/st4gem-v1.2.1.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/st4gem --strip-components=1
 	patch -d $(BUILDDIR)/st4gem -p1 < st4gem/patches/0001-Add-missing-default-fourier-transform-coordinate-typ.patch
 	( cd $(BUILDDIR)/st4gem && \
@@ -247,7 +247,7 @@ st4gem.pkg: core.pkg
 	         --root $(BUILDDIR)/st4gem \
 	         --install-location /usr/local/lib/iraf/extern/st4gem/ \
 		 $(PKGBUILD_ARG) \
-		 --version 1.0 \
+		 --version 1.2.1 \
 	         $@
 
 xdimsum.pkg: core.pkg

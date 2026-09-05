@@ -18,7 +18,7 @@ macOS](https://iraf-community.github.io/install.html#macos) web page.
 * mscred [8c160e5](https://github.com/iraf-community/iraf-mscred/tree/8c160e5), 2023-12-12
 * rvsao [2.8.5](http://tdc-www.harvard.edu/iraf/rvsao/rvsao-2.8.5.tar.gz)
 * sptable [1.0.pre20180612](https://github.com/iraf-community/iraf-sptable/releases/tag/1.0.pre20180612)
-* st4gem [1.0](https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/releases/1.0)
+* st4gem [1.2.1](https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/tags/v1.2.1)
 * xdimsum [6dfc2de](https://github.com/iraf-community/iraf-xdimsum/tree/6dfc2de), 2024-01-01
 
 

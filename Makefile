@@ -44,7 +44,7 @@ PKGS = core.pkg ximtool.pkg xgterm.pkg ctio.pkg fitsutil.pkg mscred.pkg	\
 
 core.pkg:
 	mkdir -p $(BUILDDIR)/iraf
-	curl -L https://github.com/iraf-community/iraf/archive/refs/tags/v2.18.1.tar.gz | \
+	curl -L https://github.com/iraf-community/iraf/archive/refs/tags/v2.18.2.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/iraf --strip-components=1
 	$(MAKE) -C $(BUILDDIR)/iraf
 	mkdir -p $(INSTDIR)/iraf
@@ -57,7 +57,7 @@ core.pkg:
 	         --root $(INSTDIR)/iraf \
 		 --install-location / \
 		 $(PKGBUILD_ARG) \
-		 --version 2.18.1 \
+		 --version 2.18.2 \
 	         $@
 
 ximtool.pkg: core.pkg
@@ -156,7 +156,7 @@ ctio.pkg: core.pkg
 # libcfitsio.a is required for fitsutil
 $(BUILDDIR)/cfitsio/.libs/libcfitsio.a:
 	mkdir -p $(BUILDDIR)/cfitsio
-	curl -L https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio-4.5.0.tar.gz | \
+	curl -L https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio-4.7.0.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/cfitsio --strip-components=1
 	cd $(BUILDDIR)/cfitsio && ./configure --disable-curl --disable-shared --enable-static
 	$(MAKE) -C $(BUILDDIR)/cfitsio
@@ -233,7 +233,7 @@ sptable.pkg: core.pkg
 
 st4gem.pkg: core.pkg
 	mkdir -p $(BUILDDIR)/st4gem
-	curl -L https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/archive/1.0/st4gem-1.0.tar.gz | \
+	curl -L https://gitlab.com/nsf-noirlab/csdc/usngo/iraf/st4gem/-/archive/v1.2.1/st4gem-v1.2.1.tar.gz | \
 	  tar xzf - -C $(BUILDDIR)/st4gem --strip-components=1
 	patch -d $(BUILDDIR)/st4gem -p1 < st4gem/patches/0001-Add-missing-default-fourier-transform-coordinate-typ.patch
 	( cd $(BUILDDIR)/st4gem && \
@@ -247,7 +247,7 @@ st4gem.pkg: core.pkg
 	         --root $(BUILDDIR)/st4gem \
 	         --install-location /usr/local/lib/iraf/extern/st4gem/ \
 		 $(PKGBUILD_ARG) \
-		 --version 1.0 \
+		 --version 1.2.1 \
 	         $@
 
 xdimsum.pkg: core.pkg
